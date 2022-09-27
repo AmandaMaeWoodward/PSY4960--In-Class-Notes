@@ -1,7 +1,7 @@
 ---
 title: "PSY4960- Pretest"
 author: "Amanda Mae Woodward"
-date: "1/31/2022"
+date: "09/27/2022"
 output: html_document
 ---
 Welcome to the R portion of PSY4960! Your first in class assignment will be to complete the pre-test below. The goal of this assignment is to determine what **you already know** so that I can adjust course materials appropriately. To that end, please treat this as a closed-note assignment. You should complete this project on your own, without feedback from your peers. This assignment will be graded based on whether or not it is submitted, not based on accuracy.
