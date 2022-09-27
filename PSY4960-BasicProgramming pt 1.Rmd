@@ -103,11 +103,9 @@ throwback). Parentheses are going to be **Really** important.
 
 ### Logical Statements
 
-We're going to go through logical statements because they can be helpful
-when wrangling/cleaning data.
+We're going to go through logical statements because they can be helpful when wrangling/cleaning data.
 
-First, what's a logical statement? It evaluates whether an expression is
-TRUE or FALSE
+First, what's a logical statement? It evaluates whether an expression is TRUE or FALSE
 
 Consider the following sentence:
 
@@ -116,11 +114,11 @@ Consider the following sentence:
 If this sentence was a fact, R would output the word "TRUE." If it was
 not true, R would output the word "FALSE."
 
-To assess whether logical statements in R are true, we use two equal
-signs (==). The above example would look something like this:
+To assess whether logical statements in R are true, we use two equal signs `==`. The above example would look something like this:
 
 ```{r}
-
+"Michael Scott" == "good manager"
+"Michael Scott" == "Michael Scott"
 ```
 
 Running this code tells us the statement is false. (**Note**: this is
@@ -131,7 +129,7 @@ However, R can compute mathematical expressions. This means we can look
 at something like this:
 
 ```{r}
-
+3*4 == 12
 ```
 
 You can also evaluate if statements are **NOT** True. We can do this by
@@ -139,20 +137,21 @@ using the symbol != For instance, I could evaluate Michael Scott as a
 manager by writing:
 
 ```{r}
-
+"Michael Scott " != "good manager"
 ```
 
-Note: In other words, == is similar to "is" and != is similar to "is
-not"
+Note: In other words, == is similar to "is" and != is similar to "is not"
 
-A similar process can be used to determine if something is greater than,
-less than, greater than or equal to, and less than or equal to.
+A similar process can be used to determine if something is greater than, less than, greater than or equal to, and less than or equal to.
 **Aside:** I use these a lot to clean developmental data
 
 Examples:
 
 ```{r}
-
+3 > 5
+4 < 9
+13 >= 90
+13 <= 90
 ```
 
 We can also make logical statements more complex by creating **and** and
@@ -160,16 +159,17 @@ We can also make logical statements more complex by creating **and** and
 
 (And- both things need to be true Or- only one has to be true)
 
-And statements use & OR && (if you have more things to evaluate)
+And statements use `&` OR `&&` (if you have more things to evaluate)
 
 ```{r}
-
+"Michael Scott" == "good manager" & "Scranton" == "Scranton"
+  
 ```
 
-Or statements use \| OR \|\| (if you have more things to evaluate)
+Or statements use | OR || (if you have more things to evaluate)
 
 ```{r}
-
+"Michael Scott" =="good manager" | "Scranton" == "Scranton"
 ```
 
 ##### Learning Outcome 1 Practice:
