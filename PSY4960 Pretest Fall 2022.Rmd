@@ -30,7 +30,7 @@ a) A variable that contains your favorite number
 
 ```
 
-b) A vector of all numbers betwee 1 and 100
+b) A vector of all numbers between 1 and 100
 ```{r q2b}
 
 ```
