@@ -1,0 +1,429 @@
+---
+title: "PSY4960- Basic Programming pt 1"
+author: "Amanda Mae Woodward"
+date: "9/27/2022"
+output: html_document
+---
+
+# Learning Outcomes: 
+After Today's Lecture, you should be able to do the following: 
+- Evaluate mathematical expressions and logical statements in R 
+- Describe how to use common R functions 
+- Explain the differences between variables, vectors, and dataframes
+- Explain how to obtain a subset of your data
+- Describe your data effectively
+
+**Disclaimer:** I am not a computer programmer. I occasionally use programming words and may use them incorrectly (feel free to correct me!). I prefer to use words like "thing" and "stuff." If it gets confusing, just let me know. 
+
+## Learning Outcome 1: Mathematical Expressions and Logical Statements
+
+### Math
+R can be treated like a big fancy calculator (think scientific calculators you may have used previously), but can do much more. 
+
+#### Addition 
+
+```{r}
+
+```
+
+#### Subtraction
+
+```{r}
+
+```
+
+#### Multiplication 
+
+```{r}
+
+```
+
+#### Division
+
+```{r}
+
+```
+
+#### Square Root
+```{r}
+```
+
+#### Exponent
+
+```{r}
+
+```
+
+**Important:** In terms of calculations, R follows PEMDAS (algebra throwback). Parentheses are going to be **Really** important.   
+
+#### More complicated Math: 
+
+```{r}
+
+```
+
+### Logical Statements
+
+We're going to go through logical statements because they can be helpful when wrangling/cleaning data. 
+
+First, what's a logical statement? It evaluates whether an expression is TRUE or FALSE
+
+Consider the following sentence: 
+
+"Michael Scott on *the Office* is a good manager" 
+
+If this sentence was a fact, R would output the word "TRUE." If it was not true, R would output the word "FALSE."
+
+To assess whether logical statements in R are true, we use two equal signs (==). The above example would look something like this: 
+
+```{r}
+
+```
+Running this code tells us the statement is false. (**Note**: this is because the phrase on the left is not the same as the one on the right.. as far as I know, R hasn't watched *the Office*).  
+
+However, R can compute mathematical expressions. This means we can look at something like this: 
+```{r}
+
+```
+
+You can also evaluate if statements are **NOT** True. We can do this by using the symbol != 
+For instance, I could evaluate Michael Scott as a manager by writing:
+```{r}
+
+```
+Note: In other words, == is similar to "is" and != is similar to "is not" 
+
+A similar process can be used to determine if something is greater than, less than, greater than or equal to, and less than or equal to. 
+**Aside:** I use these a lot to clean developmental data
+
+Examples: 
+```{r}
+
+```
+
+We can also make logical statements more complex by creating **and** and **or** statements. 
+
+(And- both things need to be true Or- only one has to be true)
+
+And statements use &      OR && (if you have more things to evaluate)
+```{r}
+
+```
+
+Or statements use |       OR  || (if you have more things to evaluate)
+```{r}
+
+```
+
+##### Learning Outcome 1 Practice: 
+
+1. Find the square root of 89
+```{r}
+
+```
+2. Determine if 3 raised to the 5 power is greater than the square root of ten thousand
+```{r}
+
+```
+
+3. Determine if 5 times 7 is less than or equal to 30 or if 4*8 is equal to 32 
+```{r}
+
+```
+
+### Learning Outcome 2: Describe how to use common R functions 
+A note on R functions: R has built in functions that help us create, manipulate, and transform our data. Generally, we use functions by writing the function name followed by parentheses. We'll talk about more of them throughout this lesson, and during the quarter. Here are some that are just generally helpful.
+
+If you want to learn more about a function, you can type ?function name in the console. 
+
+The first one we'll talk about is ":". Typically, it would be used by writing  small#:larger#, and would give you all of the numbers in between. 
+
+```{r}
+"first number": "second number"
+
+```
+
+`rep()` allows you to repeat something a set number of times. Looking at the help file, we can see the arguments contained in the function. To use it, we write `rep(thingToBeRepeated, #ofTimes)`. 
+```{r}
+
+```
+**Note:** For functions, you can either write arguments in the order listed in the help file (not labelled), or make sure you include the argument label. 
+```{r}
+
+```
+
+`seq()` gives you a sequence of numbers. typically, we use it by writing `seq(lowest#, highest#, by=#)`. 
+
+```{r}
+
+```
+
+#### Learning Outcome 2 Practice: 
+1. Print every 5th number between 1 and 100. 
+```{r}
+
+```
+2. Use code to write I love statistics 4 times.
+```{r}
+
+```
+3. Repeat the numbers 1-10 twice
+```{r}
+
+```
+
+4. Print every 3rd number from 1-20 3 times. 
+```{r}
+
+```
+
+###Learning Outcome 3: Explain the differences between variables, vectors, and dataframes 
+
+What's the problem with using R as a big, fancy calculator? We haven't stored anything so we could use it later. 
+Different things that we will need later have different names, but we store them in the same way
+
+nameItsBeingSavedAs <- thingBeingSaved
+
+**Note:** the "assignment operator" (less than sign followed by the hyphen; I was taught to call it a carrot) should be used over an equal sign. There are a lot of reasons for this, but the main one is that R is finicky and different updates and packages read "=" differently, so <- is safest. 
+
+Naming conventions: I was taught to use all lower case for the first word, and capital letters for each word after. That's what I'll use in class. However, you can use whatever convention you want. But a couple of things to keep in mind:
+
+- R objects (things) can't have spaces in the name
+- R is case sensitive (statistics, Statistics, StAtIsTiCs are all read as three different things)
+- Don't give your stored stuff names that are the same as R functions (e.g. no naming dataframes "data" or saving something as "mean")
+- Make sure your names mean something (slgahwgh may help you get our your frustration out- but you won't remember what it means later and neither will your collaborators)
+
+**Variables**
+
+Variables store one thing in R (it can be a number, a word, or whatever you want)
+
+```{r}
+
+```
+*Aside: `c()` means combine. you can put stuff in parentheses and use a comma to separate it and have it print together
+
+**Vectors**
+
+Vectors are objects that store one dimensional information  
+
+To save more than one thing in an R variable, you would use the combine function- `c()`.
+
+```{r}
+"numeric"
+
+"character"
+
+```
+
+If you want to call one of the things you saved in a vector, you can write `vectorName[position of thing]`
+```{r}
+
+```
+
+**Dataframes**
+Data frames are made from multiple vectors. There are preloaded datasets in R we can use to practice, such as mtcars: 
+```{r}
+
+```
+
+### Practice: Make a vector with 5 animals
+
+```{r}
+
+```
+
+We can also combine vectors into a dataframe using R functions (`cbind.data.frame()` or `rbind.data.frame()`). We'll use the vectors we made above as an example.   
+```{r}
+
+```
+
+Just like you can pick one thing in a vector, you can select one column or one row in a dataframe. You can use brackets like we did with vectors, but you need to specify whether it's a row or a column. If it's a column, you can write `dataframe[,column#]` and you can use `dataframe[row#,]`.  
+
+```{r}
+
+```
+
+You can also get columns by using a `$`. 
+
+```{r}
+
+```
+
+#### Learning Outcome 3 Practice:
+1. Create a variable that contains your favorite ice cream flavor
+```{r}
+
+```
+2. Create two vectors: 1 vector should contain the names of four TV shows and the 2nd vector should contain your ratings for those shows
+```{r}
+
+```
+
+3. Make this variable into a data frame.
+```{r}
+
+```
+
+4. Print the information in the 2nd row. 
+```{r}
+
+```
+
+5. Print the information in the 2nd column. 
+```{r}
+
+```
+
+Bonus: Print the information in the 3rd row, 1st column.
+```{r}
+
+```
+
+###Learning Outcome 4: Explain how to obtain a subset of your data
+
+Sometimes, you don't need a full dataframe, you just want to use a piece of it. To do this, we can use subsetting or indexing to save just that piece.  
+
+**Indexing**
+We'll started with indexing because it is similar to what we did above. You can write dataframeName[logical statement] to get a portion of the data. 
+
+For instance, we could use indexing to get only cars in the mtcars dataset with 4 gears.
+```{r}
+
+```
+In this case, you'll notice that I put a comma after the logical statement. This is because we want all of the **rows** where the car has 4 gears.
+
+**Subsetting** 
+We can also use the subsetting function to create a new dataframe. We can look at the subset function by typing ?subset in the console. 
+We use this function by `subset(dataframe, logical statement)`
+
+If we wanted to get the same subset of data as above, we could do the following: 
+
+`subset(dataframe, condition)`
+```{r}
+
+```
+
+**A Note on Pipes (more advanced)**
+If not, we're going to talk about another way to get a subset of data from our dataframe. 
+
+Above, we used indexing and subsetting to make new dataframes that contain only the information we need. You can also use something called pipes to create a subset (For those who use tidyverse). A pipe, or `%>%` is another way to program in R. It takes whatever is on the left and "feeds" it to the function on the right. So the data goes through a pipeline to get you the desired outcome. 
+
+First, we need to load a package. Package libraries have lots of functions made by really smart people to make our lives easier. To load a package, you need to first use the following code in the console: `install.packages("packageName")`
+
+After that, we need to use the library command to load the package
+```{r}
+#install.packages("tidyverse")
+library(tidyverse)
+```
+
+We can use filter and select to subset data with pipes.
+
+We can use `filter()` to pick a subset of rows:
+```{r}
+"data %>%  filter(column==value)"
+
+```
+
+We can use `select()` to pick a subset of columns:
+```{r}
+"data %>% select(columns)"
+
+```
+
+####Learning Outcome 4 Practice:
+1. Load the ChickWeight dataset.
+```{r}
+
+```
+2. Create a subset of data that contains information for Chick 3. 
+```{r}
+#View(ChickWeight)
+
+```
+3. Create a subset of data for Diet 2 only. 
+```{r}
+
+```
+
+4. Create a subset of data for all chicks weighing less than 100 gm. 
+```{r}
+
+```
+
+### Learning Outcome 5: Describe your data effectively
+We need to make sure that we can understand what our data look like before doing anything more complicated.
+
+**Looking at the top/bottom of your dataset**
+First we can view what our data look like using `head()` and `tail()` to see the beginning and end of our data. 
+they both use a similar format `head(dataframe, # of rows )`
+We'll use the diamonds dataframe (need to install ggplot if you haven't already!)
+```{r}
+
+```
+
+This lets us see just part of our data to make sure it loaded appropriately/is what we expect. 
+
+**Summary**
+We can also describe our data using a function called `summary()`. 
+
+```{r}
+
+```
+What do you notice about the summaries? 
+
+**Aside:** There are different classes(types) of data. They get summarized differently, and the class of data influences what functions you can run. 
+
+There are **many** functions to summarize data, and we'll use more as the quarter goes on. 
+
+**Descriptive Statistics**
+We can also get descriptive statistics for specific columns
+
+If we need the # of observations, we can use `length()` or `nrow()` to get this information. 
+```{r}
+
+```
+
+We can also take the average by using the function `mean()`. 
+```{r}
+
+```
+We can get the standard deviation using `sd()`.
+```{r}
+
+```
+
+`var() `gives us the variance
+```{r}
+
+```
+`range()` gives us the range
+```{r}
+
+```
+
+###Learning Outcome 5 Practice
+1. Summarize the ChickWeight dataset
+```{r}
+
+```
+
+2. Find the mean of the weight column
+```{r}
+
+```
+
+3. Summarize the data for just the 1st chick
+```{r}
+
+```
+
+4. What is the variance of the 1st chick's weight? 
+```{r}
+
+```
+ 
+5. What is the range in weight for each chick posted in the dataset?
+
+```{r}
+
+```

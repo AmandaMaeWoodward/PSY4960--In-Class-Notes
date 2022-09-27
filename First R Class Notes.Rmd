@@ -1,6 +1,0 @@
----
-title: "First R Class Notes"
-author: "Amanda Mae Woodward"
-date: "2022-09-26"
-output: html_document
----
