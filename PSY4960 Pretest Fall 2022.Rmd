@@ -10,34 +10,34 @@ Welcome to the R portion of PSY4960! Your first in class assignment will be to c
 
 a) a.	3*4 + 5 
 ```{r 1a}
-
+17
 ```
 
 b) √(64) /5 + (3*7)
 ```{r 1b}
-
+22.6
 ```
 
 c) take the sum of 4 and 9 and then multiply by 7
 ```{r 1c}
-
+91
 ```
 
 2) Create variables that contain the following information: 
 
 a) A variable that contains your favorite number
 ```{r q2a}
-
+9
 ```
 
 b) A vector of all numbers between 1 and 100
 ```{r q2b}
-
+I don't know
 ```
 
 c) A vector of all odd numbers between 1 and 37
 ```{r q2c}
-
+I don't know
 ```
 
 d)An object that contains the words younger and older repeated 5 times each 
@@ -47,52 +47,61 @@ d)An object that contains the words younger and older repeated 5 times each
 
 e)A vector of every 5th number between 1 and 100
 ```{r q2e}
-
+"5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60",
+"65", "70", "75", "80", "85", "90", "95", "100". 
 ```
 
 3) Evaluate the following logical statements:
 
 a) 3 times 4 is not equal to 6 plus 7
 ```{r 3a}
-
+12≠13
+TRUE
 ```
 
 b) 4 squared is greater than 3 and 5 is less than 9 
 ```{r 3b}
-
+16>3. 5<9
+TRUE
 ```
 
 c) 12 divided by 2 is less than 5 or 4 is greater than 3
 ```{r 3c}
-
+6<5  4>3
+TRUE
 ```
 
 4) Answer the following questions using the mtcars dataset
 
 a) open the mtcars dataset 
 ```{r 4a}
-
+mtcars
 ```
 
 b) Describe the data that are present in this dataset
+There is quantitative data that describes certain car models and makes. The data includes the cars mpg, cylinders, horsepower, weight, and more.
 
 
 c) What kind of variable is present in the am column? How do you know? 
 
 
+
 d) how many observations are in this dataset? 
 ```{r 4d}
-
+32 rows of cars and 11 columns of data about the vehicles
 ```
 
 e) what is the mean of the miles per gallon column? 
 ```{r 4e}
-
+mtcars
+mean(mpg)
+  =25.54
 ```
 
 f) what is the standard deviation of the miles per gallon column? 
 ```{r 4f}
-
+sd(mpg)
+  =4.03
 ```
 
 g) Print the top of the dataset
@@ -109,17 +118,20 @@ h) Summarize the whole dataset
 
 a) Create a scatter plot of hp versus mpg
 ```{r 5a}
-
+library(ggplot2)
+ggplot(mtcars, aes(x=hp, y=mpg)) +geom_point(stat="identity")
 ```
 
 b) Add a regression line to your scatter plot
 ```{r 5b}
-
+library(ggplot2)
+ggplot(mtcars, aes(x=hp, y=mpg)) +geom_point() + geom_smooth(method="lm")
 ```
 
 c) Create a bar graph with gear on the x axis. 
 ```{r 5c}
-
+library(ggplot2)
+ggplot(mtcars, aes(x=gear, y=mpg)) +geom_bar(stat="identity")
 ```
 
 d) Add color to your bar graph by including information about the am column. 
