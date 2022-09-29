@@ -279,6 +279,7 @@ temperature<- 50
 
 favoriteCoffee
 temperature
+
 ```
 
 *Aside: `c()` means combine. you can put stuff in parentheses and use a comma to separate it and have it print together
