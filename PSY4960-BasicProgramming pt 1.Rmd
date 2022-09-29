@@ -191,45 +191,38 @@ sqrt(89)
 
 ### Learning Outcome 2: Describe how to use common R functions
 
-A note on R functions: R has built in functions that help us create,
-manipulate, and transform our data. Generally, we use functions by
-writing the function name followed by parentheses. We'll talk about more
-of them throughout this lesson, and during the quarter. Here are some
+A note on R functions: R has built in functions that help us create, manipulate, and transform our data. Generally, we use functions by writing the function name followed by parentheses. We'll talk about more of them throughout this lesson, and during the quarter. Here are some
 that are just generally helpful.
 
-If you want to learn more about a function, you can type ?function name
-in the console.
+If you want to learn more about a function, you can type `?` function name in the console.
 
-The first one we'll talk about is ":". Typically, it would be used by
-writing small#:larger#, and would give you all of the numbers in
-between.
+The first one we'll talk about is `:`. Typically, it would be used by writing small#:larger#, and would give you all of the numbers in between.
 
 ```{r}
-"first number": "second number"
-
+#"first number: second number"
+1:8
+389:1
 ```
 
-`rep()` allows you to repeat something a set number of times. Looking at
-the help file, we can see the arguments contained in the function. To
-use it, we write `rep(thingToBeRepeated, #ofTimes)`.
+`rep()` allows you to repeat something a set number of times. Looking at the help file, we can see the arguments contained in the function. To use it, we write `rep(thingToBeRepeated, #ofTimes)`.
 
 ```{r}
-
+rep(13, 5)
+rep("cold weather sucks", 3)
 ```
 
-**Note:** For functions, you can either write arguments in the order
-listed in the help file (not labelled), or make sure you include the
-argument label.
+**Note:** For functions, you can either write arguments in the order listed in the help file (not labelled), or make sure you include the argument label.
 
 ```{r}
-
+rep(times=4, x= "hi")
 ```
 
 `seq()` gives you a sequence of numbers. typically, we use it by writing
 `seq(lowest#, highest#, by=#)`.
 
 ```{r}
-
+seq(3, 12, 1)
+seq(3,12, 0.01)
 ```
 
 #### Learning Outcome 2 Practice:
@@ -237,55 +230,43 @@ argument label.
 1.  Print every 5th number between 1 and 100.
 
 ```{r}
-
+seq(5,100,5)
+seq(0,100, 5)
+seq(1,100, 5)
 ```
 
 2.  Use code to write I love statistics 4 times.
 
 ```{r}
-
+rep("I love statistics", 4)
 ```
 
 3.  Repeat the numbers 1-10 twice
 
 ```{r}
-
+rep(1:10,2)
+rep(seq(1,10,1),2)
 ```
 
 4.  Print every 3rd number from 1-20 3 times.
-
 ```{r}
-
+rep(seq(1,20,3),3)
 ```
 
-###Learning Outcome 3: Explain the differences between variables,
-vectors, and dataframes
+###Learning Outcome 3: Explain the differences between variables, vectors, and dataframes
 
-What's the problem with using R as a big, fancy calculator? We haven't
-stored anything so we could use it later. Different things that we will
-need later have different names, but we store them in the same way
+What's the problem with using R as a big, fancy calculator? We haven't stored anything so we could use it later. Different things that we will need later have different names, but we store them in the same way
 
-nameItsBeingSavedAs \<- thingBeingSaved
+nameItsBeingSavedAs <- thingBeingSaved
 
-**Note:** the "assignment operator" (less than sign followed by the
-hyphen; I was taught to call it a carrot) should be used over an equal
-sign. There are a lot of reasons for this, but the main one is that R is
-finicky and different updates and packages read "=" differently, so \<-
-is safest.
+**Note:** the "assignment operator" (less than sign followed by the hyphen; I was taught to call it a carrot) should be used over an equal sign. There are a lot of reasons for this, but the main one is that R is finicky and different updates and packages read "=" differently, so <- is safest.
 
-Naming conventions: I was taught to use all lower case for the first
-word, and capital letters for each word after. That's what I'll use in
-class. However, you can use whatever convention you want. But a couple
-of things to keep in mind:
+Naming conventions: I was taught to use all lower case for the first word, and capital letters for each word after. That's what I'll use in class. However, you can use whatever convention you want. But a couple of things to keep in mind:
 
 -   R objects (things) can't have spaces in the name
--   R is case sensitive (statistics, Statistics, StAtIsTiCs are all read
-    as three different things)
--   Don't give your stored stuff names that are the same as R functions
-    (e.g. no naming dataframes "data" or saving something as "mean")
--   Make sure your names mean something (slgahwgh may help you get our
-    your frustration out- but you won't remember what it means later and
-    neither will your collaborators)
+-   R is case sensitive (statistics, Statistics, StAtIsTiCs are all read as three different things)
+-   Don't give your stored stuff names that are the same as R functions (e.g. no naming dataframes "data" or saving something as "mean")
+-   Make sure your names mean something (slgahwgh may help you get our your frustration out- but you won't remember what it means later and neither will your collaborators)
 
 **Variables**
 
@@ -293,11 +274,14 @@ Variables store one thing in R (it can be a number, a word, or whatever
 you want)
 
 ```{r}
+favoriteCoffee<- "caramel highrise"
+temperature<- 50
 
+favoriteCoffee
+temperature
 ```
 
-\*Aside: `c()` means combine. you can put stuff in parentheses and use a
-comma to separate it and have it print together
+*Aside: `c()` means combine. you can put stuff in parentheses and use a comma to separate it and have it print together
 
 **Vectors**
 
@@ -308,53 +292,63 @@ function- `c()`.
 
 ```{r}
 "numeric"
-
+excitedForFall<- c(10,10,10,3,5,7,8,2)
+excitedForFall
 "character"
-
+favoriteSeason<- c("summer", "fall", "fall", "spring", "spring", "summer", "winter", "winter")
+favoriteSeason
 ```
 
 If you want to call one of the things you saved in a vector, you can
 write `vectorName[position of thing]`
 
 ```{r}
+favoriteSeason[7]
+excitedForFall[3]
+```
+
+**Dataframes** Data frames are made from multiple vectors. There are preloaded datasets in R we can use to practice, such as mtcars:
+
+```{r}
+data(mtcars)
 
 ```
 
-**Dataframes** Data frames are made from multiple vectors. There are
-preloaded datasets in R we can use to practice, such as mtcars:
+### Practice: 
 
+1)Make a vector with 5 animals
 ```{r}
-
+animals<- c("dragon", "elephant", "dog", "cat", "toad", "lemur")
 ```
-
-### Practice: Make a vector with 5 animals
-
+2)Make a vector of the number of cookies you think each animal could eat
 ```{r}
-
+cookiesEaten<- c(450,200, 10,5, .2, 8) 
 ```
 
 We can also combine vectors into a dataframe using R functions
-(`cbind.data.frame()` or `rbind.data.frame()`). We'll use the vectors we
-made above as an example.
+(`cbind.data.frame()` or `rbind.data.frame()`). We'll use the vectors we made above as an example.
 
 ```{r}
-
+animalDat<- cbind.data.frame(animals, cookiesEaten) 
+animalDatTwo<-rbind.data.frame(animals, cookiesEaten)
+animalDAtThree<- data.frame(animals, cookiesEaten)
 ```
 
-Just like you can pick one thing in a vector, you can select one column
-or one row in a dataframe. You can use brackets like we did with
-vectors, but you need to specify whether it's a row or a column. If it's
+Just like you can pick one thing in a vector, you can select one column or one row in a dataframe. You can use brackets like we did with vectors, but you need to specify whether it's a row or a column. If it's
 a column, you can write `dataframe[,column#]` and you can use
 `dataframe[row#,]`.
 
 ```{r}
-
+animalDat[,2]
+animalDat[3,]
+animalDat[4,]
+animalDat[6,1]
 ```
 
 You can also get columns by using a `$`.
 
 ```{r}
-
+animalDat$animals
 ```
 
 #### Learning Outcome 3 Practice:
@@ -365,8 +359,7 @@ You can also get columns by using a `$`.
 
 ```
 
-2.  Create two vectors: 1 vector should contain the names of four TV
-    shows and the 2nd vector should contain your ratings for those shows
+2.  Create two vectors: 1 vector should contain the names of four TV shows and the 2nd vector should contain your ratings for those shows
 
 ```{r}
 
@@ -398,51 +391,33 @@ Bonus: Print the information in the 3rd row, 1st column.
 
 ###Learning Outcome 4: Explain how to obtain a subset of your data
 
-Sometimes, you don't need a full dataframe, you just want to use a piece
-of it. To do this, we can use subsetting or indexing to save just that
-piece.
+Sometimes, you don't need a full dataframe, you just want to use a piece of it. To do this, we can use subsetting or indexing to save just that piece.
 
-**Indexing** We'll started with indexing because it is similar to what
-we did above. You can write dataframeName[logical statement] to get a
+**Indexing** We'll started with indexing because it is similar to what we did above. You can write dataframeName[logical statement] to get a
 portion of the data.
 
-For instance, we could use indexing to get only cars in the mtcars
-dataset with 4 gears.
+For instance, we could use indexing to get only cars in the mtcars dataset with 4 gears.
 
 ```{r}
 
 ```
 
-In this case, you'll notice that I put a comma after the logical
-statement. This is because we want all of the **rows** where the car has
-4 gears.
+In this case, you'll notice that I put a comma after the logical statement. This is because we want all of the **rows** where the car has 4 gears.
 
-**Subsetting** We can also use the subsetting function to create a new
-dataframe. We can look at the subset function by typing ?subset in the
-console. We use this function by `subset(dataframe, logical statement)`
+**Subsetting** We can also use the subsetting function to create a new dataframe. We can look at the subset function by typing ?subset in the console. We use this function by `subset(dataframe, logical statement)`
 
-If we wanted to get the same subset of data as above, we could do the
-following:
-
-`subset(dataframe, condition)`
+If we wanted to get the same subset of data as above, we could do the following:`subset(dataframe, condition)`
 
 ```{r}
 
 ```
 
-**A Note on Pipes (more advanced)** If not, we're going to talk about
-another way to get a subset of data from our dataframe.
+**A Note on Pipes (more advanced)** If not, we're going to talk about another way to get a subset of data from our dataframe.
 
-Above, we used indexing and subsetting to make new dataframes that
-contain only the information we need. You can also use something called
-pipes to create a subset (For those who use tidyverse). A pipe, or `%>%`
-is another way to program in R. It takes whatever is on the left and
-"feeds" it to the function on the right. So the data goes through a
+Above, we used indexing and subsetting to make new dataframes that contain only the information we need. You can also use something called pipes to create a subset (For those who use tidyverse). A pipe, or `%>%` is another way to program in R. It takes whatever is on the left and "feeds" it to the function on the right. So the data goes through a
 pipeline to get you the desired outcome.
 
-First, we need to load a package. Package libraries have lots of
-functions made by really smart people to make our lives easier. To load
-a package, you need to first use the following code in the console:
+First, we need to load a package. Package libraries have lots of functions made by really smart people to make our lives easier. To load a package, you need to first use the following code in the console:
 `install.packages("packageName")`
 
 After that, we need to use the library command to load the package
@@ -495,14 +470,9 @@ We can use `select()` to pick a subset of columns:
 
 ### Learning Outcome 5: Describe your data effectively
 
-We need to make sure that we can understand what our data look like
-before doing anything more complicated.
+We need to make sure that we can understand what our data look like before doing anything more complicated.
 
-**Looking at the top/bottom of your dataset** First we can view what our
-data look like using `head()` and `tail()` to see the beginning and end
-of our data. they both use a similar format
-`head(dataframe, # of rows )` We'll use the diamonds dataframe (need to
-install ggplot if you haven't already!)
+**Looking at the top/bottom of your dataset** First we can view what our data look like using `head()` and `tail()` to see the beginning and end of our data. they both use a similar format `head(dataframe, # of rows )` We'll use the diamonds dataframe (need to install ggplot if you haven't already!)
 
 ```{r}
 
@@ -511,8 +481,7 @@ install ggplot if you haven't already!)
 This lets us see just part of our data to make sure it loaded
 appropriately/is what we expect.
 
-**Summary** We can also describe our data using a function called
-`summary()`.
+**Summary** We can also describe our data using a function called `summary()`.
 
 ```{r}
 
@@ -520,18 +489,13 @@ appropriately/is what we expect.
 
 What do you notice about the summaries?
 
-**Aside:** There are different classes(types) of data. They get
-summarized differently, and the class of data influences what functions
-you can run.
+**Aside:** There are different classes(types) of data. They get summarized differently, and the class of data influences what functions you can run.
 
-There are **many** functions to summarize data, and we'll use more as
-the quarter goes on.
+There are **many** functions to summarize data, and we'll use more as the quarter goes on.
 
-**Descriptive Statistics** We can also get descriptive statistics for
-specific columns
+**Descriptive Statistics** We can also get descriptive statistics for specific columns
 
-If we need the \# of observations, we can use `length()` or `nrow()` to
-get this information.
+If we need the \# of observations, we can use `length()` or `nrow()` to get this information.
 
 ```{r}
 
