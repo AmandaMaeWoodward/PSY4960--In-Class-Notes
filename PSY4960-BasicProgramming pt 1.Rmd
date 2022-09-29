@@ -3,9 +3,6 @@ title: "PSY4960- Basic Programming pt 1"
 author: "Amanda Mae Woodward"
 date: "9/27/2022"
 output: html_document
-editor_options: 
-  markdown: 
-    wrap: 72
 ---
 
 # Learning Outcomes:
@@ -177,21 +174,19 @@ Or statements use | OR || (if you have more things to evaluate)
 1.  Find the square root of 89
 
 ```{r}
-
+sqrt(89)
 ```
 
-2.  Determine if 3 raised to the 5 power is greater than the square root
-    of ten thousand
+2.  Determine if 3 raised to the 5 power is greater than the square root of ten thousand
 
 ```{r}
-
+3^5>sqrt(10000)
 ```
 
-3.  Determine if 5 times 7 is less than or equal to 30 or if 4\*8 is
-    equal to 32
+3.  Determine if 5 times 7 is less than or equal to 30 or if 4\*8 is equal to 32
 
 ```{r}
-
+5*7 < 30 | 4*8 == 32
 ```
 
 ### Learning Outcome 2: Describe how to use common R functions
