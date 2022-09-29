@@ -1,0 +1,277 @@
+---
+title: "Basic R Programming Pt 2"
+author: "Amanda Mae Woodward"
+date: "2022-09-29"
+output: html_document
+---
+
+# Learning Outcomes: 
+
+After Today's Lecture, you should be able to do the following: 
+
+- Describe how to use helpful dataframe functions
+- Explain different classes of variables and how to change the class
+- Create your own function 
+- Create your own for loop
+- Create your own if statements and ifelse statments
+
+## Learning Outcome #1: Describing how to use helpful dataframe functions
+
+We'll keep talking about dataframes throughout the semester, but there are some helpful functions we didn't cover last time. 
+
+### Viewing dataframe column names
+
+Last time, we talked about how you can compute descriptive statistics on specific variables by using dataframe$name. what do you do if you don't remember the name of a variable? 
+
+You could print the dataframe repeatedly, but it's tedious. Here are some functions you can use to find the column names:
+
+`dataframe$columnName`
+
+We'll use diamonds to learn about: colnames, names, and 0 row
+```{r}
+
+```
+
+### editing column names 
+`colnames()` returns all of the column names in a vector. So we can get column names using indexing as well. 
+```{r}
+
+```
+
+It **also** means that you can change names if necessary (when we talk about dataframe manipulation next week, this can become important.)
+`colnames(data)[position]`
+```{r}
+
+```
+
+More often than not, we're using datasets that we either created or received from collaborators. That means that you may be dealing with problems **past you** graciously left you, different naming conventions, or even needing to manipulate variables that combine information. We'll talk about how to fix some of the more involved ones next week. For now, ones that may be helpful are making sure your column names are all lower case or all upper case. You can do this with the toupper and tolower functions:
+
+```{r}
+
+```
+
+### Adding Column Names
+If you need to add a column to the dataset, you need to use the assignment arrow (carrot) and the $. 
+dataframe$newColumn<- whatever you're assigning
+
+For instance, if you want to add a blank column:
+```{r}
+
+```
+Then you can fill it with whatever information you want. 
+```{r}
+
+```
+or you can fill the new column in based on other data in the dataframe
+```{r}
+
+```
+
+#### Learning Outcome 1 Practice: 
+
+1. Change all of the column names in mtcars to capital letters
+```{r}
+
+```
+2. Change the name of the 9th column to reflect the values in the am column
+```{r}
+
+```
+
+3. Change the 4th column name to all lowercase letters 
+```{r}
+
+```
+
+## Learning Outcome 2: Explain different classes of variables and how to change the class
+
+We talked about this a little bit last week, but there are different classes (types) of objects in R. As we move forward, the specific class of an object will be important. 
+
+### Different classes in R:
+
+- character: strings, words; typically labels
+- factors: can be words or numbers; categories (gender, race, age groups)
+- ordered factor: ordinal level data
+- integers: whole numbers
+- numeric: continuous numbers 
+- dates: dates
+- empty values: NA
+
+
+You can check the class of your data using `class()`
+```{r}
+
+```
+
+If you want to change the class of your variable, you can assign `as.Preferredclass(dataframe$column)` to the column name
+
+```{r}
+"is.classname"
+
+```
+**DOUBLE CHECK YOUR DATA**
+
+### Learning Outcome 2 Practice:
+1. Check the class of the horsepower column (hp) 
+```{r}
+
+```
+
+2. Change the class of horsepower to a factor
+```{r}
+
+```
+
+3. Look at summaries of horsepower as a factor and as a number. What do you notice? 
+```{r}
+
+```
+
+
+## Learning Outcome 3: Create your own function
+
+There are lots of functions in R that are helpful, but some times you need to make your own. I do this a lot when cleaning data.
+Making a function takes the following structure: 
+
+
+nameOfYourFunction<- function(types of arguments){
+stuff you want function to do
+}
+
+### Making Functions with one argument
+
+You can make a simple function that adds two to a set of numbers
+Before we make the function, we'll make a vector of numbers (1-10) as our input
+
+```{r}
+
+```
+
+then, we'll name our function addTwo and give it one argument or input
+
+```{r}
+
+```
+if we run this correctly, it should show up in the environment (top left). 
+
+Then, we can use our function to add two to our vector:
+
+```{r}
+
+```
+
+One thing to note- anything you make in a function **stays in the function.** If you want to save it to a dataframe, you treat your new function just like any other R function (i.e. you need to assign the output to a column or variable)
+
+```{r}
+"dataframe$column <- function"
+
+```
+
+function to mulitply by 7
+```{r}
+
+```
+**my favorite is**
+```{r}
+
+```
+
+### Multiple argument functions
+
+We can make functions with more than one argument. For instance we could multiply all of the numbers in our original vector by a second vector 10-1
+
+```{r}
+
+```
+
+### Learning Outcome 3 Practice
+
+1. Make a function that divides numbers by 100. 
+2. Test your function on the mtcars mpg column.
+3. Make a function that finds the mean of a column and divides it by the standard deviation of another column.
+4. Test it on the mpg column and hp column. 
+
+## Learning Outcome 4: Create your own for loop
+
+For loops can also be helpful when programming in R (some people love 'em, some hate them). Before we jump into a example coding, let's talk about what a for loop does. 
+
+Let's say we wanted to create a column in the chickweight dataset that indicated whether chick's were at the beginning of the experiment (in terms of days) or end. 
+
+We'd have to make a new column
+```{r}
+```
+and then fill in that new column by indexing the days column, which has 12 different days. 
+```{r}
+
+```
+That's a LOT of code. 
+
+We could use a **for loop** though to go through each row of the data set and fill out the new column (beginning or end) based on the days in the Time column.
+
+
+to make a for loop: 
+for (individual in bigger group){
+thing you want to happen. 
+}
+
+individual and bigger group are kind of vague- the idea is that the first part (individual) is a place holder for each of the things you want the for loop to cover. In our case, it stands for each row of the chick weight dataset. The bigger thing is the whole group you want the for loop to cover. In our case, it's **every** row in the Chick Weight dataset. 
+
+to make our for loop closer to code:
+
+for (i in ChickWeight){
+think we want to do
+}
+
+Here, I'm going to fill in the other parts as code: 
+ifelse(logical statment, "TRUE", "FALSE")
+
+
+```{r}
+
+```
+
+### Practice for Learning Outcome 4: 
+
+1. Create a for loop that will multiply each number in a vector by 4. Test it with a vector containing the numbers 1:10. 
+2. Create a new column in the mtcars data set that indicated whether a car has good mileage (over 25 mpg) or bad mileage (25 mpg or fewer).  
+
+## Learning Outcome 5: Create your own if statements and ifelse statments
+
+### if statements
+
+if statements only carry out an action if a given condition is met.
+It looks like this: 
+
+if(condition){
+what you want to happen 
+}
+
+Let's try one: in this case, we'll make an if statement to 
+```{r}
+
+```
+
+```{r}
+
+```
+
+### else statement
+```{r}
+
+```
+
+### ifelse statements
+
+R lets you combine if/else statements into a single function, ifelse(). 
+
+ifelse(condition, if TRUE, if FALSE)
+
+We can use this to accomplish the same thing we did above:
+```{r}
+
+```
+
+### Learning Outcome 5 Practice: 
+
+1. Make an if statement to determine if the weight of a chick on a given day is greater than 100 grams.  (i.e. is the weight in each row greater than 100 )
+2. create a new column in the mtcars data set to indicate whether a car has a manual or automatic transmission. 
