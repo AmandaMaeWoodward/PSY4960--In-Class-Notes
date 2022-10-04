@@ -401,7 +401,8 @@ portion of the data.
 For instance, we could use indexing to get only cars in the mtcars dataset with 4 gears.
 
 ```{r}
-
+data(mtcars)
+mtcars[mtcars$gear==4,]
 ```
 
 In this case, you'll notice that I put a comma after the logical statement. This is because we want all of the **rows** where the car has 4 gears.
@@ -411,13 +412,12 @@ In this case, you'll notice that I put a comma after the logical statement. This
 If we wanted to get the same subset of data as above, we could do the following:`subset(dataframe, condition)`
 
 ```{r}
-
+subset(mtcars,  mtcars$gear==4)
 ```
 
 **A Note on Pipes (more advanced)** If not, we're going to talk about another way to get a subset of data from our dataframe.
 
-Above, we used indexing and subsetting to make new dataframes that contain only the information we need. You can also use something called pipes to create a subset (For those who use tidyverse). A pipe, or `%>%` is another way to program in R. It takes whatever is on the left and "feeds" it to the function on the right. So the data goes through a
-pipeline to get you the desired outcome.
+Above, we used indexing and subsetting to make new dataframes that contain only the information we need. You can also use something called pipes to create a subset (For those who use tidyverse). A pipe, or `%>%` is another way to program in R. It takes whatever is on the left and "feeds" it to the function on the right. So the data goes through a pipeline to get you the desired outcome.
 
 First, we need to load a package. Package libraries have lots of functions made by really smart people to make our lives easier. To load a package, you need to first use the following code in the console:
 `install.packages("packageName")`
@@ -435,39 +435,44 @@ We can use `filter()` to pick a subset of rows:
 
 ```{r}
 "data %>%  filter(column==value)"
-
+mtcars %>% filter(gear==4)
 ```
 
 We can use `select()` to pick a subset of columns:
 
 ```{r}
 "data %>% select(columns)"
+mtcars %>% select(mpg,hp,gear)
+```
 
+```{r}
+mtcars %>% 
+  filter(gear==4) %>% 
+  select(mpg, hp, gear)
 ```
 
 ####Learning Outcome 4 Practice: 1. Load the ChickWeight dataset.
 
 ```{r}
-
+data(ChickWeight)
 ```
 
 2.  Create a subset of data that contains information for Chick 3.
 
 ```{r}
 #View(ChickWeight)
-
+subset(ChickWeight, ChickWeight$Chick==3)
+ChickWeight %>% filter(Chick==3)
 ```
 
 3.  Create a subset of data for Diet 2 only.
-
 ```{r}
-
+subset(ChickWeight, ChickWeight$Diet==2)
 ```
 
 4.  Create a subset of data for all chicks weighing less than 100 gm.
-
 ```{r}
-
+subset(ChickWeight, ChickWeight$weight< 100)
 ```
 
 ### Learning Outcome 5: Describe your data effectively
@@ -477,16 +482,22 @@ We need to make sure that we can understand what our data look like before doing
 **Looking at the top/bottom of your dataset** First we can view what our data look like using `head()` and `tail()` to see the beginning and end of our data. they both use a similar format `head(dataframe, # of rows )` We'll use the diamonds dataframe (need to install ggplot if you haven't already!)
 
 ```{r}
-
+library(ggplot2)
+head(ChickWeight)
+tail(ChickWeight)
 ```
 
-This lets us see just part of our data to make sure it loaded
-appropriately/is what we expect.
+```{r}
+head(ChickWeight, 10)
+```
+
+This lets us see just part of our data to make sure it loaded appropriately/is what we expect.
 
 **Summary** We can also describe our data using a function called `summary()`.
 
 ```{r}
-
+summary(ChickWeight)
+summary(ChickWeight$Time)
 ```
 
 What do you notice about the summaries?
@@ -497,34 +508,36 @@ There are **many** functions to summarize data, and we'll use more as the quarte
 
 **Descriptive Statistics** We can also get descriptive statistics for specific columns
 
-If we need the \# of observations, we can use `length()` or `nrow()` to get this information.
+If we need the # of observations, we can use `length()` or `nrow()` to get this information.
 
 ```{r}
-
+length(ChickWeight$Time)
+length(ChickWeight)#not correct
+nrow(ChickWeight)
 ```
 
 We can also take the average by using the function `mean()`.
 
 ```{r}
-
+mean(ChickWeight$Time)
 ```
 
 We can get the standard deviation using `sd()`.
 
 ```{r}
-
+sd(ChickWeight$Time)
 ```
 
 `var()`gives us the variance
 
 ```{r}
-
+var(ChickWeight$Time)
 ```
 
 `range()` gives us the range
 
 ```{r}
-
+range(ChickWeight$Time)
 ```
 
 ###Learning Outcome 5 Practice 1. Summarize the ChickWeight dataset
