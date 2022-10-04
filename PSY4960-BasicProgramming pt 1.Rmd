@@ -357,37 +357,38 @@ animalDat$animals
 1.  Create a variable that contains your favorite ice cream flavor
 
 ```{r}
-
+favIceCream<- "phishfood"
 ```
 
 2.  Create two vectors: 1 vector should contain the names of four TV shows and the 2nd vector should contain your ratings for those shows
 
 ```{r}
-
+tvShows<-c("welcome to wrexham", "criminal minds", "ozark", "what we do in the shadows", "the office")
+ratings<- c(9,8,10, 10, 2)
 ```
 
 3.  Make this variable into a data frame.
 
 ```{r}
-
+tvDat<-cbind.data.frame(tvShows, ratings)
 ```
 
 4.  Print the information in the 2nd row.
 
 ```{r}
-
+tvDat[2,]
 ```
 
 5.  Print the information in the 2nd column.
 
 ```{r}
-
+tvDat[,2]
 ```
 
 Bonus: Print the information in the 3rd row, 1st column.
 
 ```{r}
-
+tvDat[3,1]
 ```
 
 ###Learning Outcome 4: Explain how to obtain a subset of your data
