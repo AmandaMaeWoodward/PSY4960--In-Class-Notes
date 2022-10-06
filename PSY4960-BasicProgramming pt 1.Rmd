@@ -576,5 +576,8 @@ var(Chick1$weight)
 colnames(ChickWeight)
 "ChickWeight %>% filter(Chick==1) %>% select(weight)" #Dr. W's R didn't like this. 
 
+C1<-data.frame(ChickWeight %>% filter(Chick==1))
+range(C1 %>%  select(weight))
 
+range(data.frame(ChickWeight) %>% filter(Chick==1) %>% select(weight))
 ```
