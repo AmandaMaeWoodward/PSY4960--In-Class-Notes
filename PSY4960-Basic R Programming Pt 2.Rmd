@@ -13,7 +13,7 @@ After Today's Lecture, you should be able to do the following:
 - Explain different classes of variables and how to change the class
 - Create your own function 
 - Create your own for loop
-- Create your own if statements and ifelse statments
+- Create your own if statements and ifelse statements
 
 ## Learning Outcome #1: Describing how to use helpful dataframe functions
 
@@ -29,25 +29,35 @@ You could print the dataframe repeatedly, but it's tedious. Here are some functi
 
 We'll use diamonds to learn about: colnames, names, and 0 row
 ```{r}
-
+library(ggplot2)
+data(diamonds)
 ```
 
 ### editing column names 
 `colnames()` returns all of the column names in a vector. So we can get column names using indexing as well. 
 ```{r}
+colnames(diamonds)
+colnames(diamonds)
 
+names(diamonds)
+diamonds[0,]
 ```
 
 It **also** means that you can change names if necessary (when we talk about dataframe manipulation next week, this can become important.)
 `colnames(data)[position]`
 ```{r}
+colnames(diamonds)[3]<- "hue"
+names(diamonds)[3]<- "color"
 
 ```
 
 More often than not, we're using datasets that we either created or received from collaborators. That means that you may be dealing with problems **past you** graciously left you, different naming conventions, or even needing to manipulate variables that combine information. We'll talk about how to fix some of the more involved ones next week. For now, ones that may be helpful are making sure your column names are all lower case or all upper case. You can do this with the toupper and tolower functions:
 
 ```{r}
-
+colnames(diamonds)<- toupper(colnames(diamonds))
+diamonds$carat
+colnames(diamonds)<- tolower(colnames(diamonds))
+colnames(diamonds)
 ```
 
 ### Adding Column Names
@@ -56,31 +66,35 @@ dataframe$newColumn<- whatever you're assigning
 
 For instance, if you want to add a blank column:
 ```{r}
-
+diamonds$shiny<- NA
 ```
 Then you can fill it with whatever information you want. 
 ```{r}
-
+diamonds$shiny<- "yes"
+diamonds$shiny<- rep(c("yes","no"), nrow(diamonds)/2)
 ```
 or you can fill the new column in based on other data in the dataframe
 ```{r}
-
+diamonds$carat2<- diamonds$carat
 ```
 
 #### Learning Outcome 1 Practice: 
 
 1. Change all of the column names in mtcars to capital letters
 ```{r}
-
+data(mtcars)
+colnames(mtcars)<- toupper(colnames(mtcars))
+colnames(mtcars)
 ```
 2. Change the name of the 9th column to reflect the values in the am column
 ```{r}
-
+colnames(mtcars)[9]<- "transmission"
+colnames(mtcars)
 ```
 
 3. Change the 4th column name to all lowercase letters 
 ```{r}
-
+colnames(mtcars)[4]<- tolower(colnames(mtcars)[4])
 ```
 
 ## Learning Outcome 2: Explain different classes of variables and how to change the class
@@ -100,14 +114,25 @@ We talked about this a little bit last week, but there are different classes (ty
 
 You can check the class of your data using `class()`
 ```{r}
-
+class(diamonds$carat)
+diamonds$carat
+class(diamonds$color)
+diamonds$color
 ```
 
 If you want to change the class of your variable, you can assign `as.Preferredclass(dataframe$column)` to the column name
 
 ```{r}
 "is.classname"
+is.factor(diamonds$color)
+is.numeric(diamonds$color)
 
+diamonds$cut<- as.character(diamonds$cut)
+is.character(diamonds$cut)
+
+diamonds$carat2<- as.factor(diamonds$carat2)
+diamonds$carat2<- as.numeric(diamonds$carat2)
+diamonds$carat2<- as.numeric(levels(diamonds$carat2)[diamonds$carat2])
 ```
 **DOUBLE CHECK YOUR DATA**
 

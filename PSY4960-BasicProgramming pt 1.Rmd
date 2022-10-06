@@ -540,32 +540,41 @@ var(ChickWeight$Time)
 range(ChickWeight$Time)
 ```
 
-###Learning Outcome 5 Practice 1. Summarize the ChickWeight dataset
+###Learning Outcome 5 Practice 
 
+1. Summarize the ChickWeight dataset
 ```{r}
-
+summary(ChickWeight)
 ```
 
 2.  Find the mean of the weight column
 
 ```{r}
-
+mean(ChickWeight$weight)
 ```
 
 3.  Summarize the data for just the 1st chick
 
 ```{r}
+ChickOne_ChickWeight<- subset(ChickWeight, ChickWeight$Chick==1)
+summary(ChickOne_ChickWeight)
 
+library(tidyverse)
+Chick1<- ChickWeight %>%  filter(Chick==1)
+summary(Chick1)
 ```
 
 4.  What is the variance of the 1st chick's weight?
 
 ```{r}
-
+var(Chick1$weight)
 ```
 
 5.  What is the range in weight for each chick posted in the dataset?
-
 ```{r}
+
+colnames(ChickWeight)
+"ChickWeight %>% filter(Chick==1) %>% select(weight)" #Dr. W's R didn't like this. 
+
 
 ```
