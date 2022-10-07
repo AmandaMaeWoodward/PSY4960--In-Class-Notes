@@ -1,163 +1,171 @@
 ---
-title: "PSY4960- Pretest"
-author: "Amanda Mae Woodward"
-date: "09/27/2022"
+title: "R PreTest Participation"
+author: "Mitchell Lee"
+date: "10/6/2022"
 output: html_document
 ---
-Welcome to the R portion of PSY4960! Your first in class assignment will be to complete the pre-test below. The goal of this assignment is to determine what **you already know** so that I can adjust course materials appropriately. To that end, please treat this as a closed-note assignment. You should complete this project on your own, without feedback from your peers. This assignment will be graded based on whether or not it is submitted, not based on accuracy.
 
 1) Evaluate the following expressions: 
 
 a) a.	3*4 + 5 
 ```{r 1a}
-
+3*4 +5
 ```
 
 b) √(64) /5 + (3*7)
 ```{r 1b}
-
+sqrt(64)/5 + (3*7)
 ```
 
 c) take the sum of 4 and 9 and then multiply by 7
 ```{r 1c}
-
+4+9 * 7
 ```
 
 2) Create variables that contain the following information: 
 
 a) A variable that contains your favorite number
 ```{r q2a}
-
+favNumber<- 9
 ```
 
 b) A vector of all numbers between 1 and 100
 ```{r q2b}
-
+seq(1,100, by=1)
 ```
 
 c) A vector of all odd numbers between 1 and 37
 ```{r q2c}
-
+seq(1,37, by=2)
 ```
 
 d)An object that contains the words younger and older repeated 5 times each 
 ```{r q2d}
-
+rep("younger",5)
+rep("older", 5)
 ```
 
 e)A vector of every 5th number between 1 and 100
 ```{r q2e}
-
+seq(0,100, by=5)
 ```
 
 3) Evaluate the following logical statements:
 
 a) 3 times 4 is not equal to 6 plus 7
 ```{r 3a}
-
+3*4 != 6+7
 ```
 
 b) 4 squared is greater than 3 and 5 is less than 9 
 ```{r 3b}
-
+4^2 > 3 & 5<9
 ```
 
 c) 12 divided by 2 is less than 5 or 4 is greater than 3
 ```{r 3c}
-
+12/2 > 5 | 4>3
 ```
 
 4) Answer the following questions using the mtcars dataset
 
 a) open the mtcars dataset 
 ```{r 4a}
-
+data(mtcars)
 ```
 
 b) Describe the data that are present in this dataset
+data concerning certain cars and their characteristics. 
 
 
 c) What kind of variable is present in the am column? How do you know? 
+Transmission, due to the info in the help function.
 
 
 d) how many observations are in this dataset? 
 ```{r 4d}
-
+32
 ```
 
 e) what is the mean of the miles per gallon column? 
 ```{r 4e}
-
+mean(mtcars$mpg)
 ```
 
 f) what is the standard deviation of the miles per gallon column? 
 ```{r 4f}
-
+sd(mtcars$mpg)
 ```
 
 g) Print the top of the dataset
 ```{r 4g}
-
+head(mtcars)
 ```
 
 h) Summarize the whole dataset
 ```{r 4h}
-
+summary(mtcars)
 ```
 
 5) Use the mtcars dataset to accomplish the following:
 
 a) Create a scatter plot of hp versus mpg
 ```{r 5a}
-
+library(ggplot2)
+ggplot(mtcars, aes(x=hp, y=mpg)) +geom_point (stat="identity")
 ```
 
 b) Add a regression line to your scatter plot
 ```{r 5b}
+library(ggplot2)
+ggplot(mtcars, aes(x=hp, y=mpg)) +geom_point (stat="identity") +geom_smooth (method=lm, se=FALSE)
 
 ```
 
 c) Create a bar graph with gear on the x axis. 
 ```{r 5c}
-
+ggplot(mtcars, aes(x=gear, y=mpg)) +geom_bar(stat="identity")
 ```
 
 d) Add color to your bar graph by including information about the am column. 
 ```{r 5d}
-
+ggplot(mtcars, aes(x=gear, y=mpg)) +geom_bar(stat="identity", fill="blue")
 ```
 
 6) Open the ChickWeight dataset
 ```{r 6}
-
+data("ChickWeight")
 ```
 
 a) Create a dataset that contains only the data associated with Chick #2
 ```{r 6a}
-
+ChickWeight$Chick
+Chick=2
 ```
 
 b) Make a line graph of time vs weight
 ```{r 6b}
-
+ggplot(ChickWeight, aes(x=time(.001, 1), y=weight)) + geom_line(stat="identity")
 ```
 
 7. Open the diamonds dataset (in ggplot)
 ```{r 7}
-
+data(diamonds)
 ```
 
 a) Create a data set that contains all diamonds with over 1.5 carats and an ideal cut
 ```{r 7a}
-
+subset(diamonds, carat>=1.5, cut=="ideal")
 ```
 
 b) How many diamonds have the clarity “VS1”?
 ```{r 7b}
-
+subset(diamonds, clarity=="VS1")
+#8,171
 ```
 
 c) Graph carat by price in this new dataframe. Color by cut
 ```{r 7c}
-
+#I'm not sure
+```
 ```
