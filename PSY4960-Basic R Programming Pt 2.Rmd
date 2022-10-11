@@ -139,17 +139,19 @@ diamonds$carat2<- as.numeric(levels(diamonds$carat2)[diamonds$carat2])
 ### Learning Outcome 2 Practice:
 1. Check the class of the horsepower column (hp) 
 ```{r}
-
+class(mtcars$hp)
 ```
 
 2. Change the class of horsepower to a factor
 ```{r}
-
+mtcars$hp<- as.factor(mtcars$hp)
+class(mtcars$hp)
 ```
 
 3. Look at summaries of horsepower as a factor and as a number. What do you notice? 
 ```{r}
-
+summary(mtcars$hp)
+summary(as.numeric(levels(mtcars$hp[mtcars$hp])))
 ```
 
 
@@ -169,27 +171,34 @@ You can make a simple function that adds two to a set of numbers
 Before we make the function, we'll make a vector of numbers (1-10) as our input
 
 ```{r}
-
+numbers<- 1:10 
+num<- c(1,2,3,4,5,6,7,8,9,10)
 ```
 
 then, we'll name our function addTwo and give it one argument or input
 
 ```{r}
-
+addTwo<- function(thingToAdd){
+  thingToAdd +2 
+}
 ```
 if we run this correctly, it should show up in the environment (top left). 
 
 Then, we can use our function to add two to our vector:
 
 ```{r}
+addTwo(numbers)
 
+addTwo(9876)
 ```
 
 One thing to note- anything you make in a function **stays in the function.** If you want to save it to a dataframe, you treat your new function just like any other R function (i.e. you need to assign the output to a column or variable)
 
 ```{r}
 "dataframe$column <- function"
-
+colnames(mtcars)<- tolower(colnames(mtcars))
+mtcars$mpg2<- addTwo(mtcars$mpg)
+colnames(mtcars)
 ```
 
 function to mulitply by 7
