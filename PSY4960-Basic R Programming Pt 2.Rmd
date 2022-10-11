@@ -203,11 +203,21 @@ colnames(mtcars)
 
 function to mulitply by 7
 ```{r}
-
+timesSeven<- function(multiply){
+  multiply*7
+}
 ```
 **my favorite is**
 ```{r}
+favorite<- function(thing){
+  c("my favorite is",  thing)
+}
+favorite("french fries")
 
+favorite2<- function(thing){
+  paste("my favorite is",  thing)
+}
+favorite2("french fries")
 ```
 
 ### Multiple argument functions
@@ -215,15 +225,41 @@ function to mulitply by 7
 We can make functions with more than one argument. For instance we could multiply all of the numbers in our original vector by a second vector 10-1
 
 ```{r}
+numbersBackward<- 10:1
 
+multiplyBy<- function(number1, number2){
+  number1*number2
+}
+
+multiplyBy(numbers, numbersBackward)
 ```
 
 ### Learning Outcome 3 Practice
 
 1. Make a function that divides numbers by 100. 
+```{r}
+divideBy<- function(thing){
+  thing/100
+}
+```
+
 2. Test your function on the mtcars mpg column.
+```{r}
+data(mtcars)
+divideBy(mtcars$mpg)
+```
+
 3. Make a function that finds the mean of a column and divides it by the standard deviation of another column.
+```{r}
+meanStdDev<- function(num1, num2){
+  mean(num1)/sd(num2)
+}
+```
+
 4. Test it on the mpg column and hp column. 
+```{r}
+meanStdDev(mtcars$mpg,mtcars$hp)
+```
 
 ## Learning Outcome 4: Create your own for loop
 
@@ -233,15 +269,17 @@ Let's say we wanted to create a column in the chickweight dataset that indicated
 
 We'd have to make a new column
 ```{r}
+data(ChickWeight)
+ChickWeight$beginning<- NA
 ```
 and then fill in that new column by indexing the days column, which has 12 different days. 
 ```{r}
-
+ChickWeight$beginning[ChickWeight$Time<12]<- "beginning"
+ChickWeight$beginning[ChickWeight$Time>12]<- "end"
+ChickWeight$beginning
 ```
-That's a LOT of code. 
 
 We could use a **for loop** though to go through each row of the data set and fill out the new column (beginning or end) based on the days in the Time column.
-
 
 to make a for loop: 
 for (individual in bigger group){
@@ -261,7 +299,10 @@ ifelse(logical statment, "TRUE", "FALSE")
 
 
 ```{r}
-
+ChickWeight$beginning2<-  NA
+for (i in 1:nrow(ChickWeight)){
+  ChickWeight$beginning2[i]<- "left off here" 
+}
 ```
 
 ### Practice for Learning Outcome 4: 
