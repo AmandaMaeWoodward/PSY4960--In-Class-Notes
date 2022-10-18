@@ -22,7 +22,7 @@ You'll want to press the "import dataset" button above your global environment. 
 Once you press okay, you'll see your dataset pop up in the console below. You should move it to your .Rmd file and name it however you'd like. I have a tendency to use "dat", though it's not the most informative. Feel free to use your own name, but remember that whatever you call it here is how you'll refer to it for the rest of the lesson. 
 
 ```{r}
-
+dat<- read.csv("~/Desktop/PSY4960-Fall2022/PSY4960- In Class Notes/PSY4960-AggressionSampleData.csv")
 ```
 
 ### Learning Outcome #1: Transform wide data to long
@@ -40,13 +40,14 @@ As mentioned above, the current data are in wide format. We can change this to l
 **pivot_longer**
 I think this is the easiest version to use. We'll need to use the "tidyr" library. 
 ```{r}
-
+library(tidyverse)
 ```
 `pivot_longer()` uses the following structure: 
 `pivot_longer(dataframe, columns containing wide data, names_to, values_to)`
 names_to: specifies what you'd like to call the column that contains the previous column names
 values_to: specifies the name of the column where the scores go
 ```{r}
+datLong<- pivot_longer(dat, cols = c("baselineAggression", "postAggression"), names_to= "timePoint", values_to= "aggressionScore")
 
 ```
 **Note:** remember to save the data to your environment. 
@@ -54,33 +55,34 @@ values_to: specifies the name of the column where the scores go
 #### Learning Outcome 1 Practice
 1. Open the relig_income dataset.
 ```{r}
-
+data(relig_income)
 ```
 
 2. Restructure the dataset so that it is in long format. 
 ```{r}
-
+rIncome<- pivot_longer(relig_income,cols=c(colnames(relig_income)[2:11]), names_to = "income", values_to = "peopleReport")
 ```
 
 **gather** 
 `gather()` is another function in tidyr that can be used to.
-gather has the following arguments gather(dataframe, key, value, columns to act on)
+gather has the following arguments `gather(dataframe, key, value, columns to act on)`
 key- what you'd like the column containing old column names to be called
 value- what you'd like the scores column to be called
 
 ```{r}
+datLong2<- gather(dat, key = "timePoint", value= "aggressionScore", c("baselineAggression", "postAggression"))
 
 ```
 
 **melt**
 `melt()` is a function in the reshape2 library. It's another way to create long data
 ```{r}
-
+library(reshape2)
 ```
 `melt()` uses the following arguments: 
 `melt(dataframe, id.vars, measure.vars, variable.name, value.name)`
 ```{r}
-
+datLong3<- melt(dat, id.vars= c("subjNo", "ageGroup", "parentReportGender", "condition"), measure.vars= c("baselineAggression", "postAggression"), variable.name= "timePoint", value.name= "aggressionScore" )
 ```
 
 ### Learning Outcome 2: Transform data from long to wide
@@ -90,7 +92,7 @@ As above, we'll restructure the data in three ways. Again, some ways are more in
 The pair function for pivot_longer. It has the following arguments: 
 `pivot_wider(dataset, id columns, names_from, values_from)`
 ```{r}
-
+datWide<- pivot_wider(datLong, id_cols = c("subjNo", "ageGroup", "parentReportGender", "condition"), names_from= "timePoint", values_from = "aggressionScore")
 ```
 
 **spread** 
@@ -98,7 +100,7 @@ is the pair function for gather. It has the following arguments:
 `spread(data, key, value, columns to make wide)`
 key = timepoint; value = aggression score
 ```{r}
-
+datWide2<- spread(datLong2, key = "timePoint", value= "aggressionScore")
 ```
 
 **dcast**
@@ -113,12 +115,12 @@ datWide3<- dcast(datLong3, formula= subjNo+ ageGroup+parentReportGender+conditio
 #### Learning Outcome 2: Practice
 1. Open the ChickWeight dataset.
 ```{r}
-
+data(ChickWeight)
 ```
 
 2. Convert it from long to wide format. 
 ```{r}
-
+chickWeightWide<- pivot_wider(ChickWeight, id_cols = c("Chick", "Diet"), names_from = "Time", values_from= "weight" ) 
 ```
 
 3. Convert from wide to long. 
@@ -140,7 +142,7 @@ you can use some of the commands we've already used in a different structure
 
 ```{r}
 #pivot_longer(data, cols= c(x,y), names_to= "stuff", values_to="stuff")
-
+dat %>% pivot_longer(cols=c("baselineAggression", "postAggression"), names_to= "timePoint", values_to= "aggressionScore")
 ```
 
 

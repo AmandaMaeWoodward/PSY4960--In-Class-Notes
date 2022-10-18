@@ -274,8 +274,8 @@ ChickWeight$beginning<- NA
 ```
 and then fill in that new column by indexing the days column, which has 12 different days. 
 ```{r}
-ChickWeight$beginning[ChickWeight$Time<12]<- "beginning"
-ChickWeight$beginning[ChickWeight$Time>12]<- "end"
+ChickWeight$beginning[ChickWeight$Time<10]<- "beginning"
+ChickWeight$beginning[ChickWeight$Time>10]<- "end"
 ChickWeight$beginning
 ```
 
@@ -300,15 +300,36 @@ ifelse(logical statment, "TRUE", "FALSE")
 
 ```{r}
 ChickWeight$beginning2<-  NA
-for (i in 1:nrow(ChickWeight)){
-  ChickWeight$beginning2[i]<- "left off here" 
+for(i in 1:nrow(ChickWeight)){
+  if(ChickWeight$Time[i]<=10){
+  ChickWeight$beginning2[i]<- "yes" 
+  }
+  else{ChickWeight$beginning2[i]<- "no"}
 }
 ```
 
 ### Practice for Learning Outcome 4: 
 
-1. Create a for loop that will multiply each number in a vector by 4. Test it with a vector containing the numbers 1:10. 
+1. Create a for loop that will multiply each number in a vector by 4. Test it with a vector containing the numbers 10:100. 
+```{r}
+vect<- 10:100
+
+for(i in 1:length(vect)){
+  print(vect[i]*4)
+}
+```
+
 2. Create a new column in the mtcars data set that indicated whether a car has good mileage (over 25 mpg) or bad mileage (25 mpg or fewer).  
+```{r}
+colnames(mtcars)<- tolower(colnames(mtcars))
+mtcars$goodMiles<- NA
+for(cars in 1:nrow(mtcars)){
+  if(mtcars$mpg[cars]>=25){
+    mtcars$goodMiles[cars]<- "yes"
+  }
+  else{mtcars$goodMiles[cars]<- "no"}
+}
+```
 
 ## Learning Outcome 5: Create your own if statements and ifelse statments
 
@@ -323,16 +344,20 @@ what you want to happen
 
 Let's try one: in this case, we'll make an if statement to 
 ```{r}
+if(ChickWeight$Diet==1){
+  print("grain")
+}
 
+if(mean(ChickWeight$weight)<100){
+  print("less than 100")
+}
+mean(ChickWeight$weight)
 ```
-
-```{r}
-
-```
-
 ### else statement
 ```{r}
-
+if(mean(ChickWeight$weight)<100){
+  print("less than 100")
+} else{"more than 100"}
 ```
 
 ### ifelse statements
@@ -343,10 +368,27 @@ ifelse(condition, if TRUE, if FALSE)
 
 We can use this to accomplish the same thing we did above:
 ```{r}
+ifelse(mean(ChickWeight$weight)<100, "less than 100", "more than 100")
 
+ifelse(ChickWeight$Diet== 1, "grain", "corn")
 ```
 
 ### Learning Outcome 5 Practice: 
 
 1. Make an if statement to determine if the weight of a chick on a given day is greater than 100 grams.  (i.e. is the weight in each row greater than 100 )
+```{r}
+ChickWeight$greater100<- NA
+for(i in 1:nrow(ChickWeight)){
+  if(ChickWeight$weight[i]<100){
+    ChickWeight$greater100[i]<- "no"}
+  else{ChickWeight$greater100[i]<-"yes"}
+}
+ChickWeight$size<-ifelse(ChickWeight$weight>100, "bigChick","smallChick")
+```
+
 2. create a new column in the mtcars data set to indicate whether a car has a manual or automatic transmission. 
+```{r}
+data(mtcars)
+mtcars$transmission<-ifelse(mtcars$am==1, "manual", "automatic")
+```
+
