@@ -4,7 +4,7 @@ author: "Amanda Mae Woodward"
 date: "10/20/2022"
 output: html_document
 ---
-
+ 
 # Learning Outcomes
 
 By the end of this class, students should be able to: 
@@ -210,12 +210,12 @@ We can make scatter plots using the argument `geom_point()`. We'll make a graph 
 ### Practice
 - make a scatter plot of the x and y variables in the diamonds dataset. 
 ```{r}
-ggplot(diamonds, aes(x,y))+geom_point()+ theme_classic()
+
 ```
 
 - modify the graph to include at least 2of the style elements we talked about
 ```{r}
-ggplot(diamonds, aes(x,y))+geom_point(shape=13, color="hotpink")+ theme_classic()
+
 ```
 
 **Note:**In this case, `geom_point()` is the best option to make our scatter plot. If you work with small datasets, the points may be overlapping and make it look like you have less data. In these cases, you can use `geom_jitter()`, which will offset the dots slightly and allow you to see each participant.  
@@ -246,22 +246,19 @@ you can also change the shape and the size of the points by adding shape and siz
 ####Practice: 
 1. Create a scatter plot of the table and carat variables. 
 ```{r}
-ggplot(diamonds, aes(table, carat))+ geom_point()
+
 ```
 2. Change the color of the points to your favorite color. 
 ```{r}
-ggplot(diamonds, aes(table, carat))+ geom_point(color="darkred")
+
 ```
 3. Change the shape of the points. 
 ```{r}
-ggplot(diamonds, aes(table, carat))+ geom_point(color="darkred", shape=8)
-ggplot(diamonds, aes(table, carat)) + geom_point(color = "skyblue", shape = 17)
+
 ```
 4. Add a line of best fit to your scatter plot. 
 ```{r}
-ggplot(diamonds, aes(table, carat))+geom_point(color= "hot pink", size= 1, shape= 8) + geom_smooth(method= "lm", se = FALSE, color= "purple", size= 1)
 
-ggplot(diamonds, aes(table, carat))+geom_point(color= "hot pink", size= 1, shape= 8) + geom_smooth(method= "lm", se = TRUE, color= "purple", size= 1)
 ```
 
 **Line graphs**
@@ -284,18 +281,17 @@ I hope that the pattern is starting to make sense, but the only difference with 
 ### Practice: 
 1. Create a boxplot for carat.
 ```{r}
-ggplot(diamonds, aes(carat))+ geom_boxplot()
+
 ```
 
 2. Create boxplots of carat for each level of cut.
 ```{r}
-ggplot(diamonds, aes(cut,carat))+ geom_boxplot()
 
 ```
 
 3. **Bonus** play around with fill and color. What changes about your boxplots? 
 ```{r}
-ggplot(diamonds, aes(cut,carat))+ geom_boxplot(color="darkblue" , fill= "pink" )
+
 ```
 
 ## Learning Outcome 4:Incorporate third variables into graphs
@@ -321,20 +317,20 @@ We'll walk through these together because I think it's helpful to see what color
 ```{r}
 
 ```
-`scale_color_manual`; 
+`scale_color_manual(values = #)`; 
 ```{r}
-ggplot(mtcars, aes(mpg, hp, color= as.factor(cyl)))+ geom_point()+ scale_color_manual(values= c("#5d43a6","#d27d76","#34bcf2" ))
+
 ```
 R ColorBrewer
-`scale_color_brewer()`
+`scale_color_brewer(palette=)`
 ```{r}
-ggplot(mtcars, aes(mpg, hp, color= as.factor(cyl)))+ geom_point()+scale_color_brewer(palette= "Blues")
+
 ```
 
 Viridis
 `scale_color_viridis()`
 ```{r}
-ggplot(mtcars, aes(mpg, hp, color= as.factor(cyl)))+ geom_point()+scale_color_viridis(discrete = TRUE, option= "b")
+
 ```
 
 
@@ -344,29 +340,20 @@ I'll also show you how you can get color pallets online and find the associated 
 ### Learning Outcome 4 Practice. 
 1. Create a graph of cyl and mpg in the mtcars dataset. 
 ```{r}
-ggplot(mtcars, aes(mpg, fill= as.factor(cyl)))+ geom_histogram() + scale_fill_viridis(discrete=TRUE, option= "D")
-"OR"
-ggplot(mtcars, aes(cyl, fill=as.factor(mpg)))+geom_bar()+theme_classic()+ylab("")
-"OR"
-car<-summarySE(mtcars, measurevar= "mpg", groupvars= "cyl")
-ggplot(car, aes(cyl, mpg))+geom_bar(stat="identity")+theme_classic()
-"OR"
-ggplot(mtcars, aes(cyl, mpg))+ geom_point()
+
 ```
 
 2. In some way, include am as a third variable in this graph. 
 ```{r}
-ggplot(mtcars, aes(cyl, mpg, color=as.factor(am)))+ geom_point()
+
 ```
 
 3. Create a graph of mpg and hp. 
 ```{r}
-ggplot(mtcars, aes(hp, mpg))+geom_point()
+
 ```
 4. In some way, include gear as a third variable. 
 ```{r}
-ggplot(mtcars, aes(hp, mpg, color=as.factor(gear)))+geom_point()+ scale_color_brewer(palette = "Set2")
 
-ggplot(mtcars, aes(hp, mpg, color=as.factor(gear)))+geom_point()+ scale_color_manual(values= c('#edf8b1','#7fcdbb','#2c7fb8'))
 ```
 
