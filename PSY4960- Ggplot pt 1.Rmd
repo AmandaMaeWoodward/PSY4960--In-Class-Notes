@@ -194,28 +194,36 @@ ggplot(diamonds, aes(cut))+geom_bar()
 2. Change the x and y labels to something that is more informative. 
 ```{r}
 ggplot(diamonds, aes(cut))+geom_bar()+xlab("Cut of \n Diamond")+ ylab("frequency")
+
 ```
 
 ### Adding a third variable to a bar graph: 
 ```{r}
+ggplot(diamonds, aes(cut, fill= color))+geom_bar()+xlab("Cut of \n Diamond")+ ylab("frequency")
+
+
+ggplot(diamonds, aes(cut, fill= color))+geom_bar(position= position_dodge())
 
 ```
 
 **Scatter plot**
 We can make scatter plots using the argument `geom_point()`. We'll make a graph of carat by price. 
 ```{r}
-
+ggplot(diamonds, aes(carat, price)) + geom_point()
 ```
 
 ### Practice
 - make a scatter plot of the x and y variables in the diamonds dataset. 
 ```{r}
-
+plot(y~x, data=diamonds)
+ggplot(diamonds, aes(x,y))+ geom_point()
 ```
 
 - modify the graph to include at least 2of the style elements we talked about
 ```{r}
+ggplot(diamonds, aes(x,y))+ geom_point(color="pink", shape=25)+ theme_classic()
 
+ggplot(diamonds,aes(x,y))+ geom_jitter()
 ```
 
 **Note:**In this case, `geom_point()` is the best option to make our scatter plot. If you work with small datasets, the points may be overlapping and make it look like you have less data. In these cases, you can use `geom_jitter()`, which will offset the dots slightly and allow you to see each participant.  
@@ -223,74 +231,85 @@ We can make scatter plots using the argument `geom_point()`. We'll make a graph 
 **Inserting a regression line**
 We can include a regression line into our graph using `geom_smooth()`.
 ```{r}
+ggplot(diamonds, aes(x,y)) +geom_point(color= "aquamarine", size = 1)+ geom_smooth(method= "lm")+theme_classic()
 
+ggplot(diamonds, aes(x,y)) +geom_point(color= "aquamarine", size = 2)+ geom_smooth(method= "lm", alpha = .4)+theme_classic()
 ```
 
 
 We can customize whether the regression line has a confidence interval surrounding it. You may be asking yourself **what confidence interval**. Carat and price are very highly correlated. let's use an mtcars example to see how we can change it. 
 w/ 95% confidence interval shaded
 ```{r}
+ggplot(mtcars, aes(mpg, hp))+ geom_point()+ theme_classic()+ geom_smooth(method="lm", color ="purple")
+
+ggplot(mtcars, aes(mpg, hp))+ geom_point()+ theme_classic()+ geom_smooth(method="lm", color ="purple", se = FALSE)
 
 ```
 **Changing scatterplots**
 you can change the outline of a dot using "color" 
 ```{r}
-
+ggplot(mtcars, aes(mpg, hp))+geom_point(color= "orange")
 ```
 
-you can also change the shape and the size of the points by adding shape and size arguments dto geom_point. 
+you can also change the shape and the size of the points by adding shape and size arguments to geom_point. 
 ```{r}
-
+ggplot(mtcars, aes(mpg, hp))+geom_point(color= "orange", size =5, shape  = 13)+theme_dark()
 ```
 
 ####Practice: 
 1. Create a scatter plot of the table and carat variables. 
 ```{r}
-
+ggplot(diamonds, aes(table, carat))+ geom_point()
 ```
 2. Change the color of the points to your favorite color. 
 ```{r}
-
+ggplot(diamonds, aes(table, carat))+ geom_point(color= "cornflowerblue")
 ```
 3. Change the shape of the points. 
 ```{r}
-
+ggplot(diamonds, aes(table, carat))+ geom_point(color= "cornflowerblue", shape = 4)
 ```
 4. Add a line of best fit to your scatter plot. 
 ```{r}
-
+ggplot(diamonds, aes(table, carat))+ geom_point(color= "cornflowerblue", shape = 4) +geom_smooth(method= "lm", color= "green")
 ```
 
 **Line graphs**
 Line graphs follow a similar to scatterplots, but use the geom_line function. Color customizations follow the same rules as scatterplots. 
 include group in aes
 ```{r}
+data(ChickWeight)
+ggplot(ChickWeight, aes(Time, weight))+ geom_line()
 
+ggplot(ChickWeight, aes(Time, weight, group=Chick, color=Chick))+ geom_line()
 ```
 I won't talk as much about these graphs, but happy to answer questions. 
 
 **Box plots**
 I hope that the pattern is starting to make sense, but the only difference with a box plot is that you'll use `geom_boxplot()`. 
 ```{r}
-
+ggplot(ChickWeight, aes(weight))+ geom_boxplot()
 ```
 
 ```{r twoVariableBoxplot}
+ggplot(ChickWeight, aes(Chick, weight))+ geom_boxplot()
 ```
 
 ### Practice: 
 1. Create a boxplot for carat.
 ```{r}
-
+ggplot(diamonds, aes(carat))+ geom_boxplot()
 ```
 
 2. Create boxplots of carat for each level of cut.
 ```{r}
+ggplot(diamonds, aes(cut, carat))+ geom_boxplot()
 
 ```
 
 3. **Bonus** play around with fill and color. What changes about your boxplots? 
 ```{r}
+ggplot(diamonds, aes(carat))+ geom_boxplot(fill= "orange", color= "black")
 
 ```
 
@@ -300,13 +319,13 @@ There are many ways that we can include third variables.
 For bar graphs: 
 use fill = 
 ```{r}
-
+ggplot(mtcars, aes(mpg, fill=as.factor(gear)))+ geom_bar()
 ```
 
 For scatter plots: 
 color = 
 ```{r}
-
+ggplot(mtcars, aes(mpg, hp, color= as.factor(gear))) + geom_point()
 ```
 
 Rather than having all bars/dots/lines the same color, you can have them change by using various packages and by looking up a few color codes online. 
@@ -315,22 +334,23 @@ If you don't like the colors, we can specify specific ones using `scale_fill_dis
 (need to specify option for color scales)
 We'll walk through these together because I think it's helpful to see what color combinations exist and how you can use them in a bar graph or a scatter plot.
 ```{r}
-
+library(RColorBrewer)
+library(viridis)
 ```
 `scale_color_manual(values = #)`; 
 ```{r}
-
+ggplot(mtcars, aes(hp, mpg))+ geom_point()
 ```
 R ColorBrewer
 `scale_color_brewer(palette=)`
 ```{r}
-
+ggplot(mtcars, aes(hp, mpg), color= as.factor(gear))+ geom_point()+ scale_color_brewer(palette = "Blues")
 ```
 
 Viridis
 `scale_color_viridis()`
 ```{r}
-
+ggplot(mtcars, aes(hp, mpg, color= as.factor(gear)))+ geom_point() + scale_color_viridis(discrete=TRUE, option= "D")
 ```
 
 
