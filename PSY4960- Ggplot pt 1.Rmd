@@ -339,12 +339,12 @@ library(viridis)
 ```
 `scale_color_manual(values = #)`; 
 ```{r}
-ggplot(mtcars, aes(hp, mpg))+ geom_point()
+ggplot(mtcars, aes(hp, mpg, color= as.factor(gear)))+ geom_point()+ scale_color_manual(values = c("#fb9a99", "#a6cee3", "#cab2d6"))
 ```
 R ColorBrewer
 `scale_color_brewer(palette=)`
 ```{r}
-ggplot(mtcars, aes(hp, mpg), color= as.factor(gear))+ geom_point()+ scale_color_brewer(palette = "Blues")
+ggplot(mtcars, aes(hp, mpg,color= as.factor(gear)))+ geom_point()+ scale_color_brewer(palette = "Blues")
 ```
 
 Viridis
