@@ -1,0 +1,291 @@
+---
+title: "PSY4960-ggplot pt2"
+author: "Amanda Mae Woodward"
+date: "2022-10-25"
+output: html_document
+---
+
+# Learning Outcomes
+By the end of this class, students should be able to: 
+- Explain how to alter information in the legend 
+- Describe how to use facet wrap
+- Explain how to export graphs
+- Identify Code to create a shiny app 
+
+### Learning Outcome 1: Explain how to alter information in the legend
+It can also be helpful to understand how to modify your legend: 
+`+ theme(legend.position="none")` will remove the legend. You can also choose to move the legend to the top or bottom of the graph
+
+Let's try this on a graph from the diamonds dataset: 
+Create a subset of the diamonds dataset:
+```{r}
+library(ggplot2)
+data(diamonds)
+```
+
+Create a graph including information about price and carat. Include cut in some way: 
+```{r}
+
+```
+Notice what the legend looks like. To remove it we can add: 
+`theme(legend.position="none")`
+```{r}
+
+```
+We can also change the location: 
+```{r}
+
+```
+
+To Change the legend title, you can use a couple of different codes, depending on the type of data: 
+`scale_color_discrete(name="Title")` works for scatter plots filled in with a factor
+`scale_fill_discrete(name="Title)` should work for a bar graph filled in by a factor
+`scale_color_continuous()` and `scale_fill_continuous()` should work for a numeric fill
+```{r}
+
+```
+
+### Practice:
+
+1) make a graph of disp and hp from mtcars. Include miles per gallon as a third variable
+```{r}
+
+```
+
+2) Move the legend to the top of the graph
+```{r}
+
+```
+
+3) Remove the legend from the graph 
+```{r}
+
+```
+
+4) Change the title of the legend
+```{r}
+
+```
+
+### Learning Outcome 2: Describe how to use facet wrap
+Facet Wrap allows us to incorporate a third variable in another way. Specifically, it panels graphs so that we can make an individual graph for each level of a factor.
+
+we need to make a graph and save it (we'll use carat and price)
+```{r}
+
+```
+then we'll use cut to create the facets
+```{r}
+
+```
+
+```{r}
+
+```
+
+### Practice: 
+1) create a facet wrap graph to generate a scatterplot of mpg and hp based on the number of cylinders a car has
+```{r}
+
+```
+
+### Learning Outcome 3: Explain how to export graphs
+to export graphs, I use the command `ggsave()`
+Specifically, you can use the following arguments: 
+`ggsav("name of graph", width, height, units, dpi)
+```{r}
+
+```
+I don't usually specify a path in ggsave, but make sure my r code is in the directory I'd like it to be saved in. you can check your working directory by using this code
+```{r}
+
+
+```
+you can change your working directory using this code: 
+```{r}
+
+```
+
+### Learning Outcome 4: Identify Code to create a shiny app 
+## Before we get started
+Shiny apps are advanced. Even if we're focusing on "basics" the coding behind it is more advanced than what we covered last week. It's **ok** if you walk away from the lesson not knowing what I'm talking about. 
+
+The plan is to **show** you what you can build to as you program in R. There are tutorials that are ~18 hours to complete. We can't do that in one class. I've included links that I use when making shiny apps that you may want to try. 
+
+#### Identify Code to create a shiny app 
+
+shiny is a package in R that allows us to create interactive graphs. You can create dashboards and place interactive graphs online. 
+
+Today should be treated as an introduction. You can learn more here: https://shiny.rstudio.com/tutorial/ 
+
+People make shiny apps in different ways, I'm going to use naming conventions and descriptions used by R Studio developers because it makes it easier to follow along. 
+
+But first, we need to load the shiny package. 
+```{r}
+library(shiny)
+```
+
+Before we start coding, we need to talk about the different aspects of a shiny app: 
+**User Interface:** We're programming the part that someone would see in the plot
+- If you place it on the internet, this would be the portion that others would see 
+**Server:** This is the background code to create what the user sees. It's what the computer runs in the background. (ie R code)  
+
+The **User Interface** creates the webpage, and the **server** tells R how to put the pieces together.
+
+Then, **shinyApp** combines the information in the User interface and the Server. We'll start with an example below to get an idea of the structure. 
+
+Just like we started with ggplot, we'll start with a shell. 
+```{r}
+ui <- fluidPage()
+server <- function(input, output) {}
+shinyApp(ui = ui, server = server)
+```
+I am using ui to stand for the user interface. This is going to be what someone would see. Notice that the server is a function that we are designing, and we're giving it inputs and outputs. In this case, it is an empty function. 
+
+Whatever we put in the fluidpage() function above is going to be present in our shiny app. 
+```{r}
+ui <- fluidPage("I LOVE PSY4960!")
+server <- function(input, output) {}
+shinyApp(ui = ui, server = server)
+```
+You can see that whatever I write in fluid page, shows up in the app. When we want to add more to what other people will see, we need to specify different inputs and outputs.   
+
+In this section, we will talk about different inputs and outputs you can use. 
+
+**Creating a scale**
+Making graphs is complex. We're going to start with making a scale input because it helps us understand how the input functions work.  
+
+All inputs follow similar structures, so you will be able to apply this general format to other options.
+
+The function to make a scale is sliderInput() and takes the following inputs: 
+sliderInput(inputId, label, min, max, value)
+
+Just looking at the input code (not in the shiny app), it will look something like this: 
+```{r}
+sliderInput(inputId="number", label="Pick a number", value=13, min=1, max=100)
+```
+
+When we put it in the ui/server code we used to make the app: 
+```{r}
+ui <- fluidPage(
+  sliderInput(inputId = "number", 
+    label = "Pick a number", 
+    value = 13, min = 1, max = 100),
+  plotOutput("hist")
+)
+
+server <- function(input, output) {}
+
+shinyApp(ui = ui, server = server)
+```
+This code lets a person using the Shiny app pick a number between 1 and 100. We can then use this to create an output that will change based on people's responses. 
+
+**Creating a graph**
+In this example, we'll create a histogram that plots a random normal sample of size n (whatever the person picks).
+
+Before we look at the shiny app code, I need to walk you through the code we'll use as an output. 
+
+first, we'll use rnorm. We can use this function to draw a random sample from a normal distribution (mean= 0, sd=1). 
+```{r}
+set.seed(13)
+rnorm(100)
+```
+We'll put this into a plot (which will let me show you a way to graph vectors not in a dataframe)
+```{r}
+ggplot(, aes(rnorm(1000)))+ geom_histogram(fill="darksalmon")+theme_classic()
+```
+
+```{r}
+ui <- fluidPage(
+  sliderInput(inputId = "number", 
+    label = "Pick a number", 
+    value = 13, min = 1, max = 100),
+  plotOutput("hist")
+)
+
+server <- function(input, output) {
+  output$hist <- renderPlot({
+    ggplot(, aes(rnorm(input$number)))+ geom_histogram(fill="darksalmon")+theme_classic()
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+#### Practice (Challenge)
+1. Create a shiny app that allows people to select a number between 1 and 5000. 
+2. Add an output that creates a graph based on these numbers.
+```{r}
+ui <- fluidPage(
+  sliderInput(inputId = "number", 
+    label = "Pick a number", 
+    value = 13, min = 1, max = 5000),
+  plotOutput("hist")
+)
+
+server <- function(input, output) {
+  output$hist <- renderPlot({
+    ggplot(, aes(rnorm(input$number)))+ geom_histogram(fill="darkblue")+theme_classic()
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+**Challenge:** Create a graph based on two numbers chosen by the user
+
+### Using real data in a shiny app
+
+For this graph, we're going to use built in R data and allow users to choose what they'd like to graph. To do this, we'll use a dropdown list as the input. (for other inputs: https://shiny.rstudio.com/images/shiny-cheatsheet.pdf)
+
+Just like we did before, I'll show you what code we're adding to the ui side before we add it. 
+
+We're going to use the diamonds dataset for this practice
+```{r}
+data(diamonds)
+```
+
+
+**User Interface Set up**
+The first part we'll set up is the ui. We'll be making a drop down list. 
+
+To make a dropdown list, we'll use the selectInputs function. It takes the following arguments:
+selectInput(inputId, label (what other people see), choices(that people can choose from))
+```{r}
+ui<- fluidPage(
+  titlePanel("diamonds data"),
+  sidebarLayout(
+    sidebarPanel(
+  selectInput(inputId= "colorChoice", label="Select Diamond Color", choices= c("D"="D", "E"="E", "F"= "F", "G"="G", "H"="H", "I"="I", "J"="J"))),
+  mainPanel(
+plotOutput("colorgraph")
+)
+)
+)
+server <- function(input, output) {
+  output$colorgraph <- renderPlot({
+    ggplot(diamonds[diamonds$color==input$colorChoice,], aes(carat))+ geom_histogram(fill= "lightseagreen",bins= 50)+theme_classic()
+  })
+}
+
+
+shinyApp(ui = ui, server = server)
+```
+
+```{r}
+ui<- fluidPage(
+  titlePanel("diamonds data"),
+  sidebarLayout(
+    sidebarPanel(
+  selectInput(inputId= "colorChoice", label="Select Diamond Color", choices= c("D"="D", "E"="E", "F"= "F", "G"="G", "H"="H", "I"="I", "J"="J"))),
+  mainPanel(
+plotOutput("colorgraph")
+)
+)
+)
+server <- function(input, output) {
+  output$colorgraph <- renderPlot({
+    ggplot(diamonds[diamonds$color==input$colorChoice,], aes(carat, price))+ geom_point(color= "lightseagreen")+theme_classic()
+  })
+}
+
+
+shinyApp(ui = ui, server = server)
