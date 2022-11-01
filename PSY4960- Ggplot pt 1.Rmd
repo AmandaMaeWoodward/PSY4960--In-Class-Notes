@@ -360,20 +360,22 @@ I'll also show you how you can get color pallets online and find the associated 
 ### Learning Outcome 4 Practice. 
 1. Create a graph of cyl and mpg in the mtcars dataset. 
 ```{r}
-
+ggplot(mtcars, aes(cyl, mpg))+ geom_point(color="blue")
 ```
 
 2. In some way, include am as a third variable in this graph. 
 ```{r}
+ggplot(mtcars, aes(cyl, mpg, color= as.factor(am)))+ geom_point()
 
 ```
 
 3. Create a graph of mpg and hp. 
 ```{r}
-
+ggplot(mtcars, aes(mpg, hp)) + geom_point()
 ```
 4. In some way, include gear as a third variable. 
 ```{r}
+ggplot(mtcars, aes(mpg, hp, color= as.factor(gear))) + geom_point()+ scale_color_manual(values= c("#b59eab", "#9db7bd","#587790" ) )
 
 ```
 

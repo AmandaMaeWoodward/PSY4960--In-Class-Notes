@@ -21,20 +21,34 @@ Create a subset of the diamonds dataset:
 ```{r}
 library(ggplot2)
 data(diamonds)
+smallDiamonds<- subset(diamonds, diamonds$carat< .5)
 ```
 
 Create a graph including information about price and carat. Include cut in some way: 
 ```{r}
+library(RColorBrewer)
+library(viridis)
+ggplot(diamonds, aes(carat, price, color=cut)) + geom_point()+ theme_classic() + scale_color_brewer(palette= "Set2")
 
+ggplot(diamonds, aes(carat, price, color=cut)) + geom_point()+ theme_classic() + scale_color_viridis(discrete= TRUE, option="C")
 ```
 Notice what the legend looks like. To remove it we can add: 
 `theme(legend.position="none")`
 ```{r}
-
+ggplot(diamonds, aes(carat, price, color=cut)) + geom_point()+ theme_classic() + scale_color_viridis(discrete= TRUE, option="C") + theme(legend.position="none")
 ```
 We can also change the location: 
 ```{r}
+ggplot(diamonds, aes(carat, price, color=cut)) + geom_point()+ theme_classic() + scale_color_viridis(discrete= TRUE, option="C") + theme(legend.position="bottom")
+```
 
+```{r}
+data(mtcars)
+class(mtcars$gear)
+
+
+mtcars$gear<- as.factor(mtcars$gear)
+ggplot(mtcars, aes(mpg, hp, color= gear))+geom_point()
 ```
 
 To Change the legend title, you can use a couple of different codes, depending on the type of data: 
@@ -42,7 +56,12 @@ To Change the legend title, you can use a couple of different codes, depending o
 `scale_fill_discrete(name="Title)` should work for a bar graph filled in by a factor
 `scale_color_continuous()` and `scale_fill_continuous()` should work for a numeric fill
 ```{r}
+ggplot(diamonds, aes(carat, price, color=cut)) + geom_point()+ theme_classic() + scale_color_viridis(discrete= TRUE, option="C") + theme(legend.position="top") + scale_color_discrete(name="Cut of Diamond")
 
+ggplot(diamonds, aes(carat, price, color=cut)) + geom_point()+ theme_classic()  + theme(legend.position="none")+ scale_color_discrete(name= "Cut of Diamond")
+
+diamonds$CutofDiamond<- diamonds$cut
+ggplot(diamonds, aes(carat, price, color=CutofDiamond)) + geom_point()+ theme_classic() + scale_color_viridis(discrete= TRUE, option="C") + theme(legend.position="top")
 ```
 
 ### Practice:
@@ -72,16 +91,13 @@ Facet Wrap allows us to incorporate a third variable in another way. Specificall
 
 we need to make a graph and save it (we'll use carat and price)
 ```{r}
-
+diamondGraph<-ggplot(diamonds, aes(carat, price, color=cut)) + geom_point()+ theme_classic() + scale_color_viridis(discrete= TRUE, option="C") + theme(legend.position="top")
 ```
 then we'll use cut to create the facets
 ```{r}
-
+diamondGraph+ facet_wrap(~cut)
 ```
 
-```{r}
-
-```
 
 ### Practice: 
 1) create a facet wrap graph to generate a scatterplot of mpg and hp based on the number of cylinders a car has
@@ -92,18 +108,18 @@ then we'll use cut to create the facets
 ### Learning Outcome 3: Explain how to export graphs
 to export graphs, I use the command `ggsave()`
 Specifically, you can use the following arguments: 
-`ggsav("name of graph", width, height, units, dpi)
+`ggsave("name of graph", width, height, units, dpi)
 ```{r}
-
+ggsave("cutofDiamond.tiff", width= 10, height= 10, units="in", dpi= 300 )
+dev.off()
 ```
 I don't usually specify a path in ggsave, but make sure my r code is in the directory I'd like it to be saved in. you can check your working directory by using this code
 ```{r}
-
-
+getwd()
 ```
 you can change your working directory using this code: 
 ```{r}
-
+setwd()
 ```
 
 ### Learning Outcome 4: Identify Code to create a shiny app 
@@ -157,8 +173,8 @@ Making graphs is complex. We're going to start with making a scale input because
 
 All inputs follow similar structures, so you will be able to apply this general format to other options.
 
-The function to make a scale is sliderInput() and takes the following inputs: 
-sliderInput(inputId, label, min, max, value)
+The function to make a scale is `sliderInput()` and takes the following inputs: 
+`sliderInput(inputId, label, min, max, value)`
 
 Just looking at the input code (not in the shiny app), it will look something like this: 
 ```{r}
@@ -213,6 +229,12 @@ shinyApp(ui = ui, server = server)
 ```
 #### Practice (Challenge)
 1. Create a shiny app that allows people to select a number between 1 and 5000. 
+```{r}
+userInterface<- fluidPage(sliderInput(inputId = "number", label="pick a number", value= 777, min =1, max =5000))
+serverPractice<- function(input, output){}
+shinyApp(ui= userInterface, server= serverPractice)
+```
+
 2. Add an output that creates a graph based on these numbers.
 ```{r}
 ui <- fluidPage(
@@ -231,6 +253,26 @@ server <- function(input, output) {
 shinyApp(ui = ui, server = server)
 ```
 **Challenge:** Create a graph based on two numbers chosen by the user
+
+
+```{r}
+ui <- fluidPage(
+  sliderInput(inputId = "number", 
+    label = "Pick a number", 
+    value = 13, min = 1, max = 5000),sliderInput(inputId = "number2", 
+    label = "Pick a second number", 
+    value = 137, min = 1, max = 5000),
+  plotOutput("hist"),
+  plotOutput("hist2")
+)
+
+server<- function(input, output){
+  output$hist <- renderPlot({
+    ggplot(, aes(rnorm(input$number)))+ geom_histogram(fill="darkblue")+theme_classic()}) 
+output$hist2<- renderPlot({ggplot(, aes(rnorm(input$number2)))+ geom_histogram(fill = "aquamarine")})
+}
+shinyApp(ui=ui, server=server)
+```
 
 ### Using real data in a shiny app
 
