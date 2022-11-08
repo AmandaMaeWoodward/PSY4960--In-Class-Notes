@@ -1,0 +1,314 @@
+---
+title: "Statistics in R"
+author: "Amanda Mae Woodward"
+date: "2022-11-08"
+output: html_document
+---
+
+# Learning Outcomes:
+By the end of today's class, students should be able to: 
+- obtain descriptive statistics in R
+- conduct common parametric analyses in R
+- conduct common nonparametric analyses in R
+
+**Disclaimer:** Covering every type of analysis in R could be an entire course by itself. Today, we'll cover **some** analyes you can do. If there are additional analyses you'd like to cover, please let me know and I'm happy to upload supplemental code or cover it in a later class (there is flexibility in the last couple of weeks!). 
+
+Additionally, we will **not** cover interpretations in depth in this class. The goal is to teach you how to use R to run the tests, and adding interpretations for each test could make this into several semester long courses. However, if you have questions about how to interpret statistics, please let me know and I can adjust our course material. I am happy to talk about interpretations in office hours, or you will learn about them in your statistics courses.
+
+We'll simulate data to use throughout today's class:
+
+To do this, we'll use a couple of functions we've used before: `set.seed()`, `rep()`, and `sample()`
+
+**Question**: What research question do we want to focus on? 
+```{r}
+
+```
+
+```{r}
+
+```
+
+### Learning Outcome 1: Obtaining descriptive statistics in R
+We've gone through some of these already, but I want to make sure we're on the same page. For descriptive statistics, we'll mostly focus on the measures of central tendency and measures of variability. 
+
+#### Central Tendency
+
+##### Mean 
+```{r}
+
+```
+
+##### Median
+```{r}
+
+```
+
+##### Mode
+```{r}
+
+```
+
+#### Variability
+
+##### Range
+```{r}
+
+```
+
+##### Interquartile Range
+```{r}
+
+```
+
+##### Standard Deviation
+```{r}
+
+```
+
+##### Variance
+```{r}
+
+```
+
+##### Summary
+```{r}
+
+```
+
+#### Z Score
+
+The other thing that we'll put in this section is how to create a z score in your data. This allows us to view one score relative to others, even if they are collected from different distributions
+
+```{r}
+
+```
+
+##### Learning Outcome 1 Practice
+1) calculate the mean, median, and mode for any data in the our Dataset
+```{r}
+
+```
+2) what do you notice about these scores? (are they the same? different?)
+
+3) create z scores for any data in the personality Dataset. Interpret what participant 3's z score means. 
+```{r}
+
+```
+
+*Challenge* Graph your data and include the mean median and mode on the graph 
+```{r}
+
+```
+
+### Learning Outcome 2: Conduct common parametric analyses in R
+
+Now that we have covered some descriptive statistics, we'll talk about parametric ones. Parametric statistics are those that rely on assumptions to make inferences from the sample to the population. We'll go through correlations, t-tests, regression, and ANOVA. We'll go through nonparametric tests, or those that rely on less assumptions, in the next section. 
+
+#### Pearson correlation
+We'll practice running correlations using the dataset above. To do this, we'll look at the correlation between personality traits. 
+`cor(x, y)`
+```{r}
+
+```
+**Note:** It's great that we can see the correlation between these two measures, but we don't have any additional information, ie information related to significance.We can use another function, `cor.test()`, to get information about significance.
+`cor.test(x,y)`
+```{r}
+
+```
+We can change whether we our conducting a one tailed or a two tailed test by including an additional argument "alternative." It defaults to a two tailed test, but we can specify a one tailed test in either direction ("greater" or "less") 
+```{r}
+
+```
+
+### Extra Code about Correlation Tables 
+`cor()` can also be used to create correlation matrices, but need to create a dataframe that is just the variables you'd like to use. 
+`cor(data)`
+we'll do a quick example w/ mt cars
+```{r}
+
+```
+
+#### t-tests
+We can run a variety of t-tests using the same function `t.test()`. 
+
+##### one sample t-test
+A one sample t test can be computed by specifying mu in the arguments. 
+`t.test(variable, mu)`
+```{r}
+
+```
+
+##### two samples t-test
+There are two ways we can use this function when we have two variables (independent or paired). The first is to type our x and y variables in as we did in the correlation function above. 
+```{r}
+
+```
+You'll notice that the top of the t-test output says "Welch's Two sample t-test." This R function automatically assumes that the variances of each group are unequal. If we wanted to run a traditional paired-samples t-test, we need to include another argument. 
+
+OR
+we can type them in as a formula in R. Formulas typically take the form y ~ x. To show you this example, I need to reformat our wide data to long data (using what we did earlier in class!)
+`t.test(dependent variable ~ indepedent variable, data= dataframe)`
+
+```{r}
+```
+This changes the t test arguments to: 
+`t.test(formula, data)`
+```{r}
+
+```
+
+If our data were dependent between observations, we'll run a paired samples t test. The code looks pretty similar to above, but we'll use an additional argument. 
+```{r}
+
+```
+
+Finally, we some times run one tailed vs two tailed tests, just like we did with the correlations. 
+```{r}
+
+```
+
+##### Correlation and T-test practice
+1. Open the mtcars dataset. Find the correlation between mpg and hp
+```{r}
+
+```
+
+2. Conduct a significance test to determine if displacement and miles per gallon significantly correlated. 
+```{r}
+
+```
+
+3. Conduct a two-tailed t-test examining whether the average mpg differs by transmission (am). 
+```{r}
+
+```
+
+4. Conduct a one-tailed t-test examining whether the average displacement(disp) differs engine shape (vs). Specifically, test whether straight engines result in higher displacements.
+```{r}
+
+```
+
+
+#### regression
+Back to the simulated Dataset we made. The code for a linear regression is really similar (ie identical)  to what we used for t-tests.
+`lm(DV ~ IV, data)`
+```{r}
+
+```
+I tend to save my linear models because it allows me to do a few useful things:
+Just like we used   `summary()` to get a summary of our data, we can use the same function to learn more about our models
+```{r}
+
+```
+`str()` is a function that allows us to learn about the structure of our model. We can use this to get specific pieces of information, or additional information that "underlies" our model (eg residuals and fitted values)
+```{r}
+
+```
+
+**Multiple Regression**
+We can include additional factors and interaction terms to our models: 
+
+```{r}
+
+```
+The : can be used instead of + to include an interaction in your model
+```{r}
+
+```
+Using * instead of + will include both the individual predictors AND their interactions 
+```{r}
+
+```
+
+The class of our data and the way data are entered matter for regression models. 
+let's consider condition:
+
+Data don't really look continuous. We can change age to a factor. This will influence our output.  
+
+We may also need to change the reference level for factors.
+`relevel(dat$age, ref="x")`
+```{r}
+#this depends on your study! 
+```
+
+**Anova**
+There are several ways you can get Anova results in R. There are differences in the ways that they handle interactions, but they are used in the same way. We can use `aov()`, `anova()`, and `Anova()`
+
+```{r}
+
+```
+I typically use `Anova()` from the car package, but there are some exceptions. We can talk about them as they come up. 
+
+####Regression and ANOVA practice
+1. Use the mtcars dataset and create a linear model that predicts mpg from cylinder (cyl) and displacement. Print the results
+```{r}
+
+```
+
+2. Create the same model, but include an interaction term. 
+```{r}
+
+```
+
+3. Run an ANOVA predicting hp from the transmission variable. 
+```{r}
+
+```
+###Learning Outcome 3: Nonparametric analyses in R
+Nonparametric analyses are run similarly to their parametric versions. In the interest of time, we'll talk about biserial correlations, spearman correlations, Wilcoxon sign rank tests, and binomial tests. 
+
+**biserial correlations**
+Biserial correlations involve a binary outcome and a continuous variable. To run one in R, we need the ltm package. 
+```{r}
+
+```
+the function is `biserial.cor(continuous, binary)`
+```{r}
+
+```
+Mathematically, this is the same as the pearson's version. 
+```{r}
+
+```
+
+**spearman's rho**
+We can calculate spearman's rho and kendall's tau the same way. We just need to use the "method" argument for `cor.test()`
+```{r}
+
+```
+
+**Wilcoxon sign rank test**
+This is the nonparametric version of the t-test. It has the same arguments. We'll do one as an example. 
+`wilcox.test()`
+```{r}
+
+```
+
+**binomial tests**
+We use binomial tests to determine if something happens more often than chance. The function is binom.test and it has the following arguments: 
+`binom.test(successes, totalScores, probability)`
+```{r}
+
+```
+
+for instance, if we have 10 true/false statements, and get 6 right. Does this differ from chance? 
+```{r}
+
+```
+This is a two-tailed test, but can also do one tailed by specifying the alternative. 
+
+20 questions, 5 choices, and want to know probability of getting 14
+```{r}
+
+```
+
+
+#### Learning Outcome 3 practice: 
+1. using the mtcars dataset, run a correlation to determine the relationship between engine shape (vs) and hp. What test did you run and why? 
+
+
+
+2. Run a wilcoxon sign rank test to determine if cylinder and gears have different means. 
+
+
+3. Run a binomial test to determine if the number of cars with manual transmission differs from chance. (hint: use the ? feature to learn more about the dataset.)
