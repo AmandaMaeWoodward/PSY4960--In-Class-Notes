@@ -20,12 +20,27 @@ We'll simulate data to use throughout today's class:
 To do this, we'll use a couple of functions we've used before: `set.seed()`, `rep()`, and `sample()`
 
 **Question**: What research question do we want to focus on? 
+We're focusing on ice cream 
 ```{r}
-
+"character"
+brandType<- c("ben and jerry's", "bluebell", "talenti", "great value", "haagen-dazs", "edy's", "kemps", "braum's", "baskin robbins")
+set.seed(137)
+brand<- sample(brandType, 537, replace=TRUE)#character
+flavorType<- c("butter pecan", "phish food", "vanilla", "moose tracks", "strawberry", "cookie dough", "rocky road", "cookies and cream", "mint chocolate chip", "cheesecake", "chocolate", "pistachio", "spumoni", "mango")
+flavor<- sample(flavorType, 537,replace=TRUE)#character
+"numeric"
+rating<- sample(1:10, 537, replace =TRUE)# 1-10
+price<- sample(seq(1.99, 10.99, by=.5), 537, replace= TRUE)#number
+calories<- sample(seq(140, 800, by= 10 ),537, replace = TRUE )# number
+"ordinal"
+howOftenPopulation<- c("none", "a little bit", "some","often" ,"a lot")
+howOften<- sample(howOftenPopulation, 537, replace=TRUE)#rating
+chunkinessPopulation<- c("no chunks", "a little chunks", "some chunks", "more chunks", "extreme chunks")
+chunkiness<- sample(chunkinessPopulation, 537, replace=TRUE)#rating
 ```
 
 ```{r}
-
+iceCreamdat<- cbind.data.frame(brand, flavor, rating, price, calories, howOften, chunkiness)
 ```
 
 ### Learning Outcome 1: Obtaining descriptive statistics in R
