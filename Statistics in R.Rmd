@@ -41,6 +41,9 @@ chunkiness<- sample(chunkinessPopulation, 537, replace=TRUE)#rating
 
 ```{r}
 iceCreamdat<- cbind.data.frame(brand, flavor, rating, price, calories, howOften, chunkiness)
+
+head(iceCreamdat)
+summary(iceCreamdat)
 ```
 
 ### Learning Outcome 1: Obtaining descriptive statistics in R
@@ -50,44 +53,58 @@ We've gone through some of these already, but I want to make sure we're on the s
 
 ##### Mean 
 ```{r}
-
+mean(iceCreamdat$rating, na.rm= TRUE)
+#avg value; expected value
 ```
 
 ##### Median
 ```{r}
-
+median(iceCreamdat$rating)
+#middle value
 ```
 
 ##### Mode
 ```{r}
+library(modeest)
+mfv(iceCreamdat$rating)
+#most frequent value
+mode(iceCreamdat$rating)
+```
 
+```{r}
+library(ggplot2)
+ggplot(iceCreamdat, aes(rating))+ geom_histogram()
+#plot(x=iceCreamdat$rating, type="h")
+qplot(x = iceCreamdat$rating)
 ```
 
 #### Variability
 
 ##### Range
 ```{r}
-
+range(iceCreamdat$rating)
+10-1
 ```
 
 ##### Interquartile Range
 ```{r}
-
+IQR(iceCreamdat$rating)
 ```
 
 ##### Standard Deviation
 ```{r}
-
+sd(iceCreamdat$rating)
 ```
 
 ##### Variance
 ```{r}
-
+var(iceCreamdat$rating)
+sd(iceCreamdat$rating)^2
 ```
 
 ##### Summary
 ```{r}
-
+summary(iceCreamdat$rating)
 ```
 
 #### Z Score
@@ -95,7 +112,7 @@ We've gone through some of these already, but I want to make sure we're on the s
 The other thing that we'll put in this section is how to create a z score in your data. This allows us to view one score relative to others, even if they are collected from different distributions
 
 ```{r}
-
+scale(iceCreamdat$rating)
 ```
 
 ##### Learning Outcome 1 Practice
