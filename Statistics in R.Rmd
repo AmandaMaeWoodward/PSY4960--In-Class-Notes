@@ -118,18 +118,28 @@ scale(iceCreamdat$rating)
 ##### Learning Outcome 1 Practice
 1) calculate the mean, median, and mode for any data in the our Dataset
 ```{r}
+mean(iceCreamdat$price)
+median(iceCreamdat$price)
+mfv(iceCreamdat$price)
 
 ```
 2) what do you notice about these scores? (are they the same? different?)
-
-3) create z scores for any data in the personality Dataset. Interpret what participant 3's z score means. 
+they are different
 ```{r}
+qplot(iceCreamdat$price)
+```
 
+3) create z scores for any data in the iceCream Dataset. Interpret what participant 3's z score means. 
+```{r}
+scale(iceCreamdat$price)
+scale(iceCreamdat$price)[3]
+iceCreamdat$priceZ<- scale(iceCreamdat$price)
+iceCreamdat$priceZ[3]
 ```
 
 *Challenge* Graph your data and include the mean median and mode on the graph 
 ```{r}
-
+ggplot(iceCreamdat, aes(price))+ geom_histogram()+ geom_vline(xintercept= mean(price), color = "blue", size=1) + geom_vline(xintercept= median(price), color= "skyblue", size= 1)+ geom_vline(xintercept = mfv(price), color= "green", size=1)+ theme_classic()
 ```
 
 ### Learning Outcome 2: Conduct common parametric analyses in R
@@ -137,19 +147,21 @@ scale(iceCreamdat$rating)
 Now that we have covered some descriptive statistics, we'll talk about parametric ones. Parametric statistics are those that rely on assumptions to make inferences from the sample to the population. We'll go through correlations, t-tests, regression, and ANOVA. We'll go through nonparametric tests, or those that rely on less assumptions, in the next section. 
 
 #### Pearson correlation
-We'll practice running correlations using the dataset above. To do this, we'll look at the correlation between personality traits. 
+We'll practice running correlations using the dataset above. To do this, we'll look at the correlation between price and rating. 
 `cor(x, y)`
 ```{r}
-
+cor(iceCreamdat$price, iceCreamdat$rating)
 ```
 **Note:** It's great that we can see the correlation between these two measures, but we don't have any additional information, ie information related to significance.We can use another function, `cor.test()`, to get information about significance.
 `cor.test(x,y)`
 ```{r}
+cor.test(iceCreamdat$price, iceCreamdat$rating)
 
+ggplot(iceCreamdat, aes(price, rating)) + geom_point()+ geom_smooth(method="lm")
 ```
 We can change whether we our conducting a one tailed or a two tailed test by including an additional argument "alternative." It defaults to a two tailed test, but we can specify a one tailed test in either direction ("greater" or "less") 
 ```{r}
-
+cor.test(iceCreamdat$price,iceCreamdat$rating, alternative= "greater" )
 ```
 
 ### Extra Code about Correlation Tables 
@@ -157,7 +169,12 @@ We can change whether we our conducting a one tailed or a two tailed test by inc
 `cor(data)`
 we'll do a quick example w/ mt cars
 ```{r}
+#cor(iceCreamdat)
+library(tidyverse)
+data(mtcars)
+smallCar<- mtcars %>% select(mpg, hp, disp)
 
+cor(smallCar)
 ```
 
 #### t-tests
@@ -167,13 +184,15 @@ We can run a variety of t-tests using the same function `t.test()`.
 A one sample t test can be computed by specifying mu in the arguments. 
 `t.test(variable, mu)`
 ```{r}
-
+t.test(iceCreamdat$rating, mu = 5.5)
+t.test(iceCreamdat$rating, mu = 5.5, alternative= "greater")
 ```
 
 ##### two samples t-test
 There are two ways we can use this function when we have two variables (independent or paired). The first is to type our x and y variables in as we did in the correlation function above. 
 ```{r}
-
+iceCreamdat$ratingBinary<- ifelse(iceCreamdat$rating> 5, "high", "low")
+t.test(iceCreamdat$calories ~ iceCreamdat$ratingBinary)
 ```
 You'll notice that the top of the t-test output says "Welch's Two sample t-test." This R function automatically assumes that the variances of each group are unequal. If we wanted to run a traditional paired-samples t-test, we need to include another argument. 
 
@@ -182,16 +201,30 @@ we can type them in as a formula in R. Formulas typically take the form y ~ x. T
 `t.test(dependent variable ~ indepedent variable, data= dataframe)`
 
 ```{r}
+t.test(iceCreamdat$calories ~ iceCreamdat$ratingBinary, var.equal=TRUE)
 ```
 This changes the t test arguments to: 
 `t.test(formula, data)`
 ```{r}
-
+"t.test(group 1, group 2, var.equal=TRUE)"
+#DON'T DO THIS BECAUSE IT MAKES NO SENSE
+t.test(mtcars$mpg, mtcars$am, var.equal=TRUE)
+#use this with wide data, not this version 
+# column for group 1 and a column for group 2
+t.test(mtcars$mpg~ mtcars$am, var.equal=TRUE)
 ```
-
 If our data were dependent between observations, we'll run a paired samples t test. The code looks pretty similar to above, but we'll use an additional argument. 
 ```{r}
+#t.test(calories~as.factor(ratingBinary), data=, paired=TRUE, ) 
+summary(as.factor(iceCreamdat$ratingBinary))
+#doesn't work because we don't have even #'s with high and low. also don't have missing data so we can't use na.rm =TRUE
 
+confusedBeforeClass<- c(rep("y",10), rep("n",10))
+measure1<- c(sample(1:8, 10, replace=TRUE), sample(7:10, 10, replace=TRUE))
+measure2<- c(sample(1:5, 10, replace=TRUE), sample(5:10,10, replace=TRUE))
+confusedDat<- cbind.data.frame(confusedBeforeClass, measure1,measure2)
+
+t.test(confusedDat$measure1, confusedDat$measure2, paired=TRUE)
 ```
 
 Finally, we some times run one tailed vs two tailed tests, just like we did with the correlations. 
