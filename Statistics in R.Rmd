@@ -236,22 +236,31 @@ t.test(confusedDat$measure1, confusedDat$measure2, paired=TRUE, alternative="gre
 ##### Correlation and T-test practice
 1. Open the mtcars dataset. Find the correlation between mpg and hp
 ```{r}
-
+cor(mtcars$mpg, mtcars$hp)
+cor.test(mtcars$mpg, mtcars$hp)
 ```
 
 2. Conduct a significance test to determine if displacement and miles per gallon significantly correlated. 
 ```{r}
-
+cor.test(mtcars$disp, mtcars$mpg)
+cor.test(mtcars$mpg, mtcars$disp)
 ```
 
 3. Conduct a two-tailed t-test examining whether the average mpg differs by transmission (am). 
 ```{r}
-
+t.test(mtcars$mpg ~ mtcars$am, var.equal=TRUE)
 ```
 
 4. Conduct a one-tailed t-test examining whether the average displacement(disp) differs engine shape (vs). Specifically, test whether straight engines result in higher displacements.
 ```{r}
+mtcars$vs2<-ifelse(mtcars$vs == 0, "v shape", "straight")
+mtcars %>% select(vs,vs2)
+mtcars$vs2<- as.factor(mtcars$vs2)
+levels(mtcars$vs2)
 
+t.test(disp ~vs2, data= mtcars, var.equal=TRUE, alternative= "greater")
+
+t.test(mtcars$disp ~ mtcars$vs, var.equal=TRUE, alternative= "less")
 ```
 
 
@@ -259,31 +268,44 @@ t.test(confusedDat$measure1, confusedDat$measure2, paired=TRUE, alternative="gre
 Back to the simulated Dataset we made. The code for a linear regression is really similar (ie identical)  to what we used for t-tests.
 `lm(DV ~ IV, data)`
 ```{r}
-
+lm(rating ~ price, data= iceCreamdat) 
 ```
 I tend to save my linear models because it allows me to do a few useful things:
 Just like we used   `summary()` to get a summary of our data, we can use the same function to learn more about our models
 ```{r}
-
+lmOne<- lm(rating~price, data= iceCreamdat)
+summary(lmOne)
 ```
 `str()` is a function that allows us to learn about the structure of our model. We can use this to get specific pieces of information, or additional information that "underlies" our model (eg residuals and fitted values)
 ```{r}
+str(lmOne)
+lmOne$coefficients
+yValues<-cbind.data.frame(iceCreamdat$rating, lmOne$fitted.values, lmOne$residuals)
+plot(lmOne)
+```
 
+```{r}
+data(mtcars)
+lmMpg<- lm(mpg~ hp, data=mtcars)
+plot(lmMpg)
 ```
 
 **Multiple Regression**
 We can include additional factors and interaction terms to our models: 
 
 ```{r}
-
+lmTwo<- lm(rating ~ price + calories, data=iceCreamdat)
+summary(lmTwo)
 ```
+Using * instead of + will include both the individual predictors AND their interactions
+```{r}
+lmThree<- lm(rating ~ price * calories, data=iceCreamdat)
+summary(lmThree)
+```
+ 
 The : can be used instead of + to include an interaction in your model
 ```{r}
-
-```
-Using * instead of + will include both the individual predictors AND their interactions 
-```{r}
-
+lm(rating~ price + calories + price:calories, data=iceCreamdat)
 ```
 
 The class of our data and the way data are entered matter for regression models. 
@@ -294,14 +316,22 @@ Data don't really look continuous. We can change age to a factor. This will infl
 We may also need to change the reference level for factors.
 `relevel(dat$age, ref="x")`
 ```{r}
-#this depends on your study! 
+#this depends on your study!
+class(iceCreamdat$chunkiness)
+iceCreamdat$chunkiness<- as.factor(iceCreamdat$chunkiness)
+#relevel(iceCreamDat$chunkiness, ref = "no chunks")
+lmFive<- lm(rating ~ chunkiness, data=iceCreamdat)
+summary(lmFive)
+
 ```
 
 **Anova**
 There are several ways you can get Anova results in R. There are differences in the ways that they handle interactions, but they are used in the same way. We can use `aov()`, `anova()`, and `Anova()`
 
 ```{r}
-
+library(car)
+Anova(lmFive)
+summary(aov(rating ~chunkiness, data=iceCreamdat))
 ```
 I typically use `Anova()` from the car package, but there are some exceptions. We can talk about them as they come up. 
 
@@ -326,21 +356,19 @@ Nonparametric analyses are run similarly to their parametric versions. In the in
 **biserial correlations**
 Biserial correlations involve a binary outcome and a continuous variable. To run one in R, we need the ltm package. 
 ```{r}
-
+library(ltm)
 ```
 the function is `biserial.cor(continuous, binary)`
 ```{r}
-
+biserial.cor(iceCreamdat$rating, iceCreamdat$ratingBinary)
 ```
 Mathematically, this is the same as the pearson's version. 
-```{r}
-
-```
 
 **spearman's rho**
 We can calculate spearman's rho and kendall's tau the same way. We just need to use the "method" argument for `cor.test()`
 ```{r}
-
+cor.test( iceCreamdat$calories,iceCreamdat$price, method= "spearman")
+cor.test( iceCreamdat$calories,iceCreamdat$price, method= "kendall")
 ```
 
 **Wilcoxon sign rank test**
