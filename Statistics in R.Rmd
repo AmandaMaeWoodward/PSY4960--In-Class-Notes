@@ -229,6 +229,7 @@ t.test(confusedDat$measure1, confusedDat$measure2, paired=TRUE)
 
 Finally, we some times run one tailed vs two tailed tests, just like we did with the correlations. 
 ```{r}
+t.test(confusedDat$measure1, confusedDat$measure2, paired=TRUE, alternative="greater")
 
 ```
 
