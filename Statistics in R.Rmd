@@ -338,17 +338,23 @@ I typically use `Anova()` from the car package, but there are some exceptions. W
 ####Regression and ANOVA practice
 1. Use the mtcars dataset and create a linear model that predicts mpg from cylinder (cyl) and displacement. Print the results
 ```{r}
+lm(mpg~cyl+ disp, data=mtcars)
 
+lmOneP<- lm(mpg~cyl+ disp, data=mtcars)
+summary(lmOneP)
 ```
 
 2. Create the same model, but include an interaction term. 
 ```{r}
-
+lm(mpg~ cyl + disp+ cyl:disp, data=mtcars)
+lm(mpg~ cyl *disp, data=mtcars)
 ```
 
 3. Run an ANOVA predicting hp from the transmission variable. 
 ```{r}
-
+aov(hp~am, mtcars)
+lmtwo<- lm(hp~ am, data=mtcars)
+Anova(lmtwo)
 ```
 ###Learning Outcome 3: Nonparametric analyses in R
 Nonparametric analyses are run similarly to their parametric versions. In the interest of time, we'll talk about biserial correlations, spearman correlations, Wilcoxon sign rank tests, and binomial tests. 
@@ -375,34 +381,56 @@ cor.test( iceCreamdat$calories,iceCreamdat$price, method= "kendall")
 This is the nonparametric version of the t-test. It has the same arguments. We'll do one as an example. 
 `wilcox.test()`
 ```{r}
+wilcox.test(price ~ ratingBinary, data= iceCreamdat)
+t.test(price ~ ratingBinary, data= iceCreamdat) # for comparison
 
+"paired samples"
+wilcox.test(confusedDat$measure1, confusedDat$measure2, paired=TRUE)
 ```
 
 **binomial tests**
 We use binomial tests to determine if something happens more often than chance. The function is binom.test and it has the following arguments: 
 `binom.test(successes, totalScores, probability)`
 ```{r}
-
+binom.test(20,100, p = .30)
 ```
 
 for instance, if we have 10 true/false statements, and get 6 right. Does this differ from chance? 
 ```{r}
-
+binom.test(6,10, .5)
 ```
 This is a two-tailed test, but can also do one tailed by specifying the alternative. 
 
-20 questions, 5 choices, and want to know probability of getting 14
+20 questions, 5 choices, and want to know probability of getting 14 correct
 ```{r}
-
+binom.test(14, 20, p= .2, alternative = "greater")
 ```
 
 
 #### Learning Outcome 3 practice: 
 1. using the mtcars dataset, run a correlation to determine the relationship between engine shape (vs) and hp. What test did you run and why? 
-
-
+```{r}
+biserial.cor(mtcars$hp, mtcars$vs,level=2)
+cor.test(mtcars$hp, mtcars$vs)
+ggplot(mtcars, aes(hp, vs))+geom_point()+ geom_smooth(method="lm")
+```
 
 2. Run a wilcoxon sign rank test to determine if cylinder and gears have different means. 
+```{r}
+wilcox.test(mtcars$cyl, mtcars$gear)
+```
 
 
 3. Run a binomial test to determine if the number of cars with manual transmission differs from chance. (hint: use the ? feature to learn more about the dataset.)
+
+```{r}
+library(tidyverse)
+?mtcars #32 obs
+mtcars %>% filter(am==1) #13
+binom.test(13,32, p = .5)
+
+binom.test(19,32, p= .5) #automatic 
+
+summary(mtcars$am==1)
+```
+

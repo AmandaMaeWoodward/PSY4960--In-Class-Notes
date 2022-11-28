@@ -19,7 +19,7 @@ output: html_document
 -	Tables in R
 
 ### Statistics
--	Omitting missing data
+-	Omitting missing data 
 -	Repeated measures anova
 -	When to use nonparametric analyses
 -	Fisher’s exact tests
