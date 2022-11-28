@@ -1,0 +1,44 @@
+---
+title: "PSY4960- Advanced Topics"
+author: "Amanda Mae Woodward"
+date: "2022-11-28"
+output: html_document
+---
+### Data set Manipulation 
+-	Data manipulation (wide and long format) 
+- Missing values
+-	Separate function
+-	What’s a subset and how to combine them 
+-	Merging data and getting rid of duplicates
+
+### Graphing
+-	More ggplot() (interactions, position dodge())
+-	Visualizations for different tests
+
+###Tables
+-	Tables in R
+
+### Statistics
+-	Omitting missing data
+-	Repeated measures anova
+-	When to use nonparametric analyses
+-	Fisher’s exact tests
+-	Interactions and ANOVA
+-	Logistic regression
+
+### Coding Syntax
+-	Pipes 
+
+### specific codes
+-	For loops/ if else statements
+-	Knitting
+
+
+
+
+
+
+
+
+
+
