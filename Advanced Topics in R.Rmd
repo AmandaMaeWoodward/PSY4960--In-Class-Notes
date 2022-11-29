@@ -1,30 +1,97 @@
 ---
-title: "PSY4960- Advanced Topics"
+title: "PSY4960- Advanced Topics "
 author: "Amanda Mae Woodward"
 date: "2022-11-28"
 output: html_document
 ---
-### Data set Manipulation 
+```{r loadLibraries, include= FALSE}
+#echo - hides code, gives output
+#include- hides code, hides output
+library(tidyverse)
+library(readr)
+```
+
+```{r importData}
+worldCupDat <- read_csv("wc_matches.csv")
+#View(worldCupDat)
+```
+
+```{r checkClass}
+summary(worldCupDat)
+worldCupDat$team1<- as.factor(worldCupDat$team1)
+worldCupDat$team2<- as.factor(worldCupDat$team2)
+```
+
+### Data set Manipulation
 -	Data manipulation (wide and long format) 
+```{r datamanipulationPrep}
+worldCupDat$gameNumber<- 1:48
+```
+
+```{r pivotLonger}
+names(worldCupDat)
+worldCupLong<- pivot_longer(worldCupDat, cols= c("team1", "team2"), values_to = "nameOfTeam", names_to= "homeAway")
+```
+
 - Missing values
+```{r}
+worldCupBad<- na.omit(worldCupDat)
+summary(is.na(worldCupDat))
+#na.rm=TRUE in the analysis
+```
 -	Separate function
+```{r sepReview}
+"data %>% separate(column to separate, what you want to call new columns, sep = thing that separates it)"
+names(worldCupDat)
+separatedDate<- worldCupDat %>% separate(date, into= c("month", "day", "year"), sep = "/")
+```
+
 -	What’s a subset and how to combine them 
+```{r}
+byTeam<-split(worldCupDat, worldCupDat$team1)
+#View(byTeam$Argentina)
+
+Ateam<- rbind.data.frame(byTeam$Argentina, byTeam$Australia)
+```
+
 -	Merging data and getting rid of duplicates
-
-### Graphing
--	More ggplot() (interactions, position dodge())
--	Visualizations for different tests
-
+```{r}
+Argentina<- rbind.data.frame(byTeam$Argentina, byTeam$Argentina)
+noDuplicates<-unique(Argentina)
+```
 ###Tables
 -	Tables in R
+```{r}
+table(worldCupDat$score1)
+library(expss)
+cro(worldCupDat$score1)
+cro(worldCupDat$team1, worldCupDat$score1)
+```
 
 ### Statistics
 -	Omitting missing data 
+```{r}
+mean(worldCupDat$score1)
+mean(worldCupDat$score1, na.rm=TRUE)
+```
 -	Repeated measures anova
+```{r}
+names(worldCupLong)
+summary(aov(score1~ gameNumber+ nameOfTeam, data= worldCupLong))
+```
+
 -	When to use nonparametric analyses
 -	Fisher’s exact tests
 -	Interactions and ANOVA
 -	Logistic regression
+```{r}
+glm(DV ~ IV, data= dataset, family="binomial")
+```
+
+
+### Graphing
+-	More ggplot() (interactions, position dodge())
+-	Visualizations for different tests
 
 ### Coding Syntax
 -	Pipes 
